@@ -102,7 +102,11 @@ class EmojiDetector implements Detector,EmojiUnicode
     
     public function detect($text)
     {
-        
+        $emojis=false;
+        //fixed double excalmation code [U+1F466 U+1F3FB] - [U+1F1FF U+1F1FC]
+        $pattern = '/['.$this->unichr(0x1F300).'-'.$this->unichr(0x1F5FF).$this->unichr(0xE000).'-'.$this->unichr(0xF8FF).']/u';
+        preg_match_all($pattern,$text,$emojis);
+        return $emojis;
     }
     
     public function replace($text,$format)
