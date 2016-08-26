@@ -117,11 +117,13 @@ class EmojiDetector implements Detector,EmojiUnicode
                 case 'symbol':$callback = $this->symbol();break;
                 case 'unicode':$callback = $this->unicode();break;
                 case 'clean':$callback = $this->clean();break;
+                default:$callback = null;
             }
+            if(!$callback) return $text;//or throw exception
             $pattern = '/['.$this->unichr(0x1F300).'-'.$this->unichr(0x1F5FF).$this->unichr(0xE000).'-'.$this->unichr(0xF8FF).']/u';
             $replace = preg_replace_callback($pattern,$callback,$text);
         }catch(Exception $e){
-            return false;
+            return $text;
         }
         return $replace;
     }
