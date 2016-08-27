@@ -16,12 +16,5 @@ interface Detector
      */
     //todo parse and replace emoji unicode only
     function detect($text);
-    //todo replace emoji unicode to Hexadecimal 
-    function ncrhex();
-    //todo replace emoji unicode to Decimal 
-    function ncrdec();
-    //todo replace emoji symbol to Unicode character
-    function unicode();
-    //todo replace emoji Unicode to symbol
-    function symbol();
+    function replace($text,$format);
 }
