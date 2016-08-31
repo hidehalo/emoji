@@ -1,11 +1,21 @@
 <?php
 require_once "Adapter.php";
-class HtmlAdpater
+class HtmlAdpater extends Adapter
 {
     //fixed double excalmation code [U+1F466 U+1F3FB] - [U+1F1FF U+1F1FC]
-    private $pattern = '/['.$this->unichr(0x1F300).'-'.$this->unichr(0x1F5FF).$this->unichr(0xE000).'-'.$this->unichr(0xF8FF).']/u';
+    protected $pattern;
     
-    private function entities( $string )
+    public function __construct()
+    {
+        $this->pattern = '/['.$this->unichr(0x1F300).'-'.$this->unichr(0x1F5FF).$this->unichr(0xE000).'-'.$this->unichr(0xF8FF).']/u';
+    }
+    public function test()
+    {
+        $p = '/['.$this->unichr(0x1F466).';'.$this->unichr(0x1F3FB).'-'.$this->unichr(0x1F1FF).';'.$this->unichr(0x1F1FC).']/u';
+        print $p;
+    }
+    
+    protected function entities( $string )
     {
         $stringBuilder = "";
         $offset = 0;
@@ -29,7 +39,7 @@ class HtmlAdpater
     }
 
     // source - http://php.net/manual/en/function.ord.php#109812
-    private function ordutf8($string, &$offset) 
+    protected function ordutf8($string, &$offset) 
     {
         $code = ord(substr($string, $offset,1));
         if ($code >= 128) {        //otherwise 0xxxxxxx
@@ -53,21 +63,22 @@ class HtmlAdpater
     //    private function unichr($i) {
     //        return iconv('UCS-4LE', 'UTF-8', pack('V', $i));
     //    }
-    
     // source - http://php.net/manual/en/function.chr.php#88611
-    private function unichr($u) 
+    protected function unichr($u) 
     {
-        return mb_convert_encoding('&#'.intval($u).';','UTF-8','HTML-ENTITIES');
+        $unichar = mb_convert_encoding('&#'.$u.';','UTF-8','HTML-ENTITIES');
+        return $unichar;
     }
     
     public function ncrhex()
     {
         return function($emojis){
-            if($emojis)
-                foreach($emojis as &$match){
-//                    $match = mb_convert_encoding('&#'.$u.';','UTF-8','HTML-ENTITIES');;       
+            if($emojis){
+                foreach($emojis as &$match) {
+//                    $match = mb_convert_encoding('&#'.$u.';','UTF-8','HTML-ENTITIES');    
                 }
                 return $match;
+            }
         };
     }
     

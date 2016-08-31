@@ -1,11 +1,11 @@
-<? php
-class abstract Adapter 
+<?php
+abstract class Adapter
 {
-    private $pattern;
+    protected $pattern;
+    abstract protected function unichr($u);
+    abstract protected function entities($string);
     public function getPattern()
     {
         return $this->pattern;
     }
-    abstract function unichr($u);
-    abstract function entitied($string);
 }

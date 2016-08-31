@@ -1,12 +1,10 @@
+<meta charset="utf-8">
 <?php
-require_once "EmojiDetector.php";
-$ed = new EmojiDetector();
+require_once "Emoji.php";
+require_once "HtmlAdapter.php";
+$em = new Emoji(new HtmlAdpater());
+$htmlAdapter = new HtmlAdpater();
+$htmlAdapter->test();
 $text = "大王派我来查Emoji:🌒🌏🍃🇬🇧!?1234567890-=+\\|/?\\";
-//var_dump($text);
-print '<br/>';
-$format = "ncrdec";
-//var_dump($ed->replace($text,$format));
-print_r($ed->detect($text));
-print_r('<br/>');
-print_r($ed->detect("\u{1F466}"));
-echo "\u{1F466}";
+$match = $em->detect($text);
+print_r($match);
