@@ -1,10 +1,8 @@
 <meta charset="utf-8">
 <?php
 require_once "Emoji.php";
-require_once "HtmlAdapter.php";
+require_once "Adapter/HtmlAdapter.php";
 $em = new Emoji(new HtmlAdpater());
-$htmlAdapter = new HtmlAdpater();
-$htmlAdapter->test();
-$text = "大王派我来查Emoji:🌒🌏🍃🇬🇧!?1234567890-=+\\|/?\\";
-$match = $em->detect($text);
-print_r($match);
+$text = "Emoji：我来组成头部🌒🌏🍃🇬🇧我来组成尾巴！@#$%";
+$t = $em->replace($text,'dec');
+print_r($t);

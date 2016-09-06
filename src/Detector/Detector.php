@@ -12,7 +12,6 @@ interface Detector
      *  https://en.wikipedia.org/wiki/Emoji
      *  http://stackoverflow.com/questions/34956163/htmlentites-not-working-for-emoji
      *  http://stackoverflow.com/questions/10564068/php-find-emoji-update-existing-code]
-     *  @tool:http://www.regexr.com/
      */
     //todo parse and replace emoji unicode only
     function detect($text);

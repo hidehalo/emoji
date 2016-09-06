@@ -1,6 +1,6 @@
 <?php 
-require_once "Detector.php";
-require_once "EmojiUnicode.php";
+require_once "Detector/Detector.php";
+require_once "Unicode/EmojiUnicode.php";
 class Emoji implements Detector,EmojiUnicode
 {
     private $adpter;
@@ -22,11 +22,9 @@ class Emoji implements Detector,EmojiUnicode
         if(!$format) return $text;
         try{
             switch($format){
-                case 'ncrhex':$callback = $this->ncrhex();break;
-                case 'ncrdec':$callback = $this->ncrdec();break;
-                case 'symbol':$callback = $this->symbol();break;
-                case 'unicode':$callback = $this->unicode();break;
-                case 'clean':$callback = $this->clean();break;
+                case 'hex':$callback = $this->adpter->hex();break;
+                case 'dec':$callback = $this->adpter->dec();break;
+                case 'clean':$callback = $this->adpter->clean();break;
                 default:$callback = null;
             }
             if(!$callback) return $text;//or throw exception
