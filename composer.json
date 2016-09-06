@@ -1,0 +1,13 @@
+{
+    "name": "hidehalo/emoji",
+    "description": "detected emoji and stored for web",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "hidehalo",
+            "email": "tianchen_cc@yeah.net"
+        }
+    ],
+    "require": {}
+}
