@@ -5,7 +5,17 @@ class HtmlAdpater extends Adapter
     protected $pattern;
     public function __construct()
     {
+        //http://apps.timwhitlock.info/emoji/tables/unicode
+//        1.Emoticons( 1F601 - 1F64F )
+//        2. Dingbats ( 2702 - 27B0 )
+//        3. Transport and map symbols ( 1F680 - 1F6C0 )
+//        4. Enclosed characters ( 24C2 - 1F251 )
+//        5. Uncategorized
         $this->pattern ='/['.
+            $this->unichr(0x1F600).'-'.$this->unichr(0x1F64F).
+            $this->unichr(0x2700).'-'.$this->unichr(0x27BF).
+            $this->unichr(0x1F680).'-'.$this->unichr(0x1F6FF).
+            $this->unichr(0x2460).'-'.$this->unichr(0x1F251).
             $this->unichr(0x1F100).'-'.$this->unichr(0x1F1FF).
             $this->unichr(0x1F300).'-'.$this->unichr(0x1F5FF).
             $this->unichr(0xE000).'-'.$this->unichr(0xF8FF).
