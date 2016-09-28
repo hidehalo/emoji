@@ -1,8 +1,16 @@
 <meta charset="utf-8">
 <?php
-require_once "Emoji.php";
-require_once "Adapter/HtmlAdapter.php";
-$em = new Emoji(new HtmlAdpater());
-$text = "Emoji：我来组成头部🌒😁🌏🍃🇬🇧我来组成尾巴！@#$%";
-$t = $em->replace($text,'dec');
-print_r($t);
+require_once "demo.php";
+use Hidehalo\Emoji;
+$emoji = new Emoji();
+echo '
+<form method="post">
+    <input type="text" name="text">
+    <button type="submit">提交</button>
+</form>
+';
+$string = @$_REQUEST['text'];
+if($string)
+    echo "<p>";
+    print_r($emoji->replace($string,'dec'));
+    echo "</p>";

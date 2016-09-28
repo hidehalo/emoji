@@ -6,17 +6,52 @@ class Emoji
 
     public function __construct()
     {
+//        http://apps.timwhitlock.info/emoji/tables/unicode
+//        1.Emoticons( 1F601 - 1F64F )
+//        2. Dingbats ( 2702 - 27B0 )
+//        3. Transport and map symbols ( 1F680 - 1F6C0 )
+//        4. Enclosed characters ( 24C2 - 1F251 )
+//        5. Uncategorized
+//        6a. Additional emoticons ( 1F600 - 1F636 )
+//        6b. Additional transport and map symbols ( 1F681 - 1F6C5 )
+//        6c. Other additional symbols ( 1F30D - 1F567 )
         $this->pattern ='/['.
+            $this->unichr(0x1F600).'-'.$this->unichr(0x1F64F).
+            $this->unichr(0x2700).'-'.$this->unichr(0x27BF).
+            $this->unichr(0x1F680).'-'.$this->unichr(0x1F6FF).
+            $this->unichr(0x2460).'-'.$this->unichr(0x1F251).
+            $this->unichr(0x0001).'-'.$this->unichr(0x007F).
+            $this->unichr(0x20D0).'-'.$this->unichr(0x20FF).
+            $this->unichr(0x2100).'-'.$this->unichr(0x214F).
+            $this->unichr(0x2300).'-'.$this->unichr(0x23FF).
+            $this->unichr(0x25A0).'-'.$this->unichr(0x25FF).
+            $this->unichr(0x2600).'-'.$this->unichr(0x26FF).
+            $this->unichr(0x2900).'-'.$this->unichr(0x297F).
+            $this->unichr(0x2B00).'-'.$this->unichr(0x2BFF).
+            $this->unichr(0x3000).'-'.$this->unichr(0x303F).
+            $this->unichr(0x1F000).'-'.$this->unichr(0x1F02F).
+            $this->unichr(0x1F300).'-'.$this->unichr(0x1F5FF).
+            $this->unichr(0x0080).'-'.$this->unichr(0x00FF).
+            $this->unichr(0x2000).'-'.$this->unichr(0x206F).
             $this->unichr(0x1F100).'-'.$this->unichr(0x1F1FF).
             $this->unichr(0x1F300).'-'.$this->unichr(0x1F5FF).
             $this->unichr(0xE000).'-'.$this->unichr(0xF8FF).
+            $this->unichr(0x1F600).'-'.$this->unichr(0x1F64F).
+            $this->unichr(0x1F680).'-'.$this->unichr(0x1F6FF).
+            $this->unichr(0x1F30D).'-'.$this->unichr(0x1F567).
         ']/u';
     }
     
-    protected function unichr($i) 
+//    protected function unichr($i) 
+//    {
+//        return \iconv('UCS-4LE', 'UTF-8', pack('V', $i));
+//    } 
+    
+    protected function unichr($u)
     {
-        return iconv('UCS-4LE', 'UTF-8', pack('V', $i));
-    } 
+        $unichar = mb_convert_encoding('&#'.$u.';','UTF-8','HTML-ENTITIES');
+        return $unichar;
+    }
     
     // source - http://php.net/manual/en/function.ord.php#109812
     protected function ordutf8($string, &$offset) 
