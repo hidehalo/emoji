@@ -9,8 +9,11 @@ class Emoji
         //http://apps.timwhitlock.info/emoji/tables/unicode
         $this->pattern ='/['.
             $this->unichr(0x0080).'-'.$this->unichr(0x02AF).
-            $this->unichr(0x0370).'-'.$this->unichr(0x03FF).
-            $this->unichr(0x2000).'-'.$this->unichr(0x206F).
+            $this->unichr(0x0300).'-'.$this->unichr(0x03FF).
+            $this->unichr(0x0600).'-'.$this->unichr(0x06FF).
+            $this->unichr(0x0C00).'-'.$this->unichr(0x0C7F).
+            $this->unichr(0x1DC0).'-'.$this->unichr(0x1DFF).
+            $this->unichr(0x2000).'-'.$this->unichr(0x209F).
             $this->unichr(0x20D0).'-'.$this->unichr(0x214F).
             $this->unichr(0x2190).'-'.$this->unichr(0x23FF).
             $this->unichr(0x2460).'-'.$this->unichr(0x1F251).
@@ -19,7 +22,9 @@ class Emoji
             $this->unichr(0x2900).'-'.$this->unichr(0x29FF).
             $this->unichr(0x2B00).'-'.$this->unichr(0x2BFF).
             $this->unichr(0x2C60).'-'.$this->unichr(0x2C7F).
+            $this->unichr(0x2E00).'-'.$this->unichr(0x2E7F).
             $this->unichr(0x3000).'-'.$this->unichr(0x303F).
+            $this->unichr(0xA490).'-'.$this->unichr(0xA4CF).
             $this->unichr(0x1F000).'-'.$this->unichr(0x1F02F).
             $this->unichr(0x1F0A0).'-'.$this->unichr(0x1F0FF).
             $this->unichr(0x1F100).'-'.$this->unichr(0x1F1FF).
