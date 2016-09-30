@@ -1,4 +1,5 @@
-<?php 
+<?php
+namespace Hidehalo\String\Emoji;
 interface Detector
 {
     /*  @link{wiki}:
@@ -15,5 +16,4 @@ interface Detector
      */
     //todo parse and replace emoji unicode only
     function detect($text);
-    function replace($text,$format);
 }

@@ -1,38 +1,23 @@
 <?php 
-require_once "Detector/Detector.php";
-require_once "Unicode/EmojiUnicode.php";
-class Emoji implements Detector,EmojiUnicode
+namespace Hidehalo\String;
+require_once __DIR__.'/Adapter/Adapter.php';
+use Hidehalo\String\Emoji\Adapter;
+
+class Emoji
 {
-    private $adpter;
+    private $adapter;
     public function __construct(Adapter $adpter)
     {
-        $this->adpter = $adpter;
+        $this->adapter = $adpter;
     }
-    
     public function detect($text)
     {
-        $emojis=false;
-        $pattern = $this->adpter->getPattern();
-        preg_match_all($pattern,$text,$emojis);
-        return $emojis;
+        return $this->adapter->detect($text);
     }
     
-    public function replace($text,$format)
+    public function replace($text,$handler)
     {
-        if(!$format) return $text;
-        try{
-            switch($format){
-                case 'hex':$callback = $this->adpter->hex();break;
-                case 'dec':$callback = $this->adpter->dec();break;
-                case 'clean':$callback = $this->adpter->clean();break;
-                default:$callback = null;
-            }
-            if(!$callback) return $text;//or throw exception
-            $pattern = $this->adpter->getPattern();
-            $replace = preg_replace_callback($pattern,$callback,$text);
-        }catch(Exception $e){
-            return $text;
-        }
-        return $replace;
+        return $this->adapter->replace($text,$handler);
     }
+
 }

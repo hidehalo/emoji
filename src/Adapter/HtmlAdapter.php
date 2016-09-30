@@ -1,46 +1,65 @@
 <?php
+namespace Hidehalo\String\Emoji;
 require_once "Adapter.php";
-class HtmlAdpater extends Adapter
+use Hidehalo\String\Emoji\Adapter;
+class HtmlAdapter extends Adapter
 {    
-    protected $pattern;
-    public function __construct()
+    //Inheritance Adapter
+    //protected $pattern;
+    
+    //replace to unicode hex value
+    private function hex()
     {
-        //http://apps.timwhitlock.info/emoji/tables/unicode
-        $this->pattern ='/['.
-            $this->unichr(0x0080).'-'.$this->unichr(0x02AF).
-            $this->unichr(0x0300).'-'.$this->unichr(0x03FF).
-            $this->unichr(0x0600).'-'.$this->unichr(0x06FF).
-            $this->unichr(0x0C00).'-'.$this->unichr(0x0C7F).
-            $this->unichr(0x1DC0).'-'.$this->unichr(0x1DFF).
-            $this->unichr(0x2000).'-'.$this->unichr(0x209F).
-            $this->unichr(0x20D0).'-'.$this->unichr(0x214F).
-            $this->unichr(0x2190).'-'.$this->unichr(0x23FF).
-            $this->unichr(0x2460).'-'.$this->unichr(0x1F251).
-            $this->unichr(0x25A0).'-'.$this->unichr(0x25FF).
-            $this->unichr(0x2600).'-'.$this->unichr(0x27EF).
-            $this->unichr(0x2900).'-'.$this->unichr(0x29FF).
-            $this->unichr(0x2B00).'-'.$this->unichr(0x2BFF).
-            $this->unichr(0x2C60).'-'.$this->unichr(0x2C7F).
-            $this->unichr(0x2E00).'-'.$this->unichr(0x2E7F).
-            $this->unichr(0x3000).'-'.$this->unichr(0x303F).
-            $this->unichr(0xA490).'-'.$this->unichr(0xA4CF).
-            $this->unichr(0x1F000).'-'.$this->unichr(0x1F02F).
-            $this->unichr(0x1F0A0).'-'.$this->unichr(0x1F0FF).
-            $this->unichr(0x1F100).'-'.$this->unichr(0x1F1FF).
-            $this->unichr(0x1F300).'-'.$this->unichr(0x1F5FF).
-            $this->unichr(0x1F30D).'-'.$this->unichr(0x1F567).
-            $this->unichr(0x1F600).'-'.$this->unichr(0x1F64F).
-            $this->unichr(0x1F680).'-'.$this->unichr(0x1F6FF).
-            $this->unichr(0x1F910).'-'.$this->unichr(0x1F918).
-            $this->unichr(0x1F980).'-'.$this->unichr(0x1F9C0).
-            $this->unichr(0x1E00).'-'.$this->unichr(0x1EFF).
-            $this->unichr(0xFE00).'-'.$this->unichr(0xFE0F).
-            $this->unichr(0xFE30).'-'.$this->unichr(0xFE4F).
-            $this->unichr(0xE000).'-'.$this->unichr(0xF8FF).
-        ']/u';
+        return function($emojis) {
+            if($emojis){
+                foreach($emojis as &$match) {    
+                }
+                return $match;
+            }
+        };
     }
+    
+    //get ascii and Chinese only
+    private function clean()
+    {
+        return function($emojis) {
+            if($emojis){
+                foreach($emojis as &$match) {    
+                    $match = '';
+                }
+                return $match;
+            }
+        };
+    }
+    
+    //replace unicode dec value
+    private function dec()
+    {
+        return function($emojis){
+            if($emojis)
+                foreach($emojis as &$match){
+                    $match= $this->entities($match);       
+                }
+            return $match;
+        };
+    }
+    
+    //extend mbstring convert unicode value to char
+    protected function mbunichr($u)
+    {
+        $unichar = mb_convert_encoding('&#'.$u.';','UTF-8','HTML-ENTITIES');
+        return $unichar;
+    }
+    
+    //implements EmojiUnicode
+    public function unichr($i) 
+    {
+        return iconv('UCS-4LE', 'UTF-8', pack('V', $i));
+    }
+    
+    //implements EmojiUnicode
     // source - http://php.net/manual/en/function.ord.php#109812
-    protected function ordutf8($string, &$offset) 
+    public function ordutf8($string, &$offset) 
     {
         $code = ord(substr($string, $offset,1));
         if ($code >= 128) {        //otherwise 0xxxxxxx
@@ -60,7 +79,8 @@ class HtmlAdpater extends Adapter
         return $code;
     }
     
-    protected function entities( $string )
+    //implements EmojiUnicode
+    public function entities( $string )
     {
         $stringBuilder = "";
         $offset = 0;
@@ -69,7 +89,6 @@ class HtmlAdpater extends Adapter
         }
         while ( $offset >= 0 ) {
             $decValue = $this->ordutf8( $string, $offset );
-//            print $decValue.PHP_EOL;
             $char = $this->unichr($decValue);
             $htmlEntited = htmlentities( $char );
             if( $char != $htmlEntited ){
@@ -82,38 +101,67 @@ class HtmlAdpater extends Adapter
         }
         return $stringBuilder;
     }
-
-    public function hex()
+    
+    public function __construct()
     {
-        return function($emojis){
-            if($emojis){
-                foreach($emojis as &$match) {    
-                }
-                return $match;
-            }
-        };
+        //http://apps.timwhitlock.info/emoji/tables/unicode
+        $this->pattern ='/['.
+            $this->unichr(0x0080).'-'.$this->unichr(0x02AF).
+            $this->unichr(0x0300).'-'.$this->unichr(0x03FF).
+            $this->unichr(0x0600).'-'.$this->unichr(0x06FF).
+            $this->unichr(0x0C00).'-'.$this->unichr(0x0C7F).
+            $this->unichr(0x1DC0).'-'.$this->unichr(0x1DFF).
+            $this->unichr(0x1E00).'-'.$this->unichr(0x1EFF).
+            $this->unichr(0x2000).'-'.$this->unichr(0x209F).
+            $this->unichr(0x20D0).'-'.$this->unichr(0x214F).
+            $this->unichr(0x2190).'-'.$this->unichr(0x23FF).
+            $this->unichr(0x2460).'-'.$this->unichr(0x25FF).
+            $this->unichr(0x2600).'-'.$this->unichr(0x27EF).
+            $this->unichr(0x2900).'-'.$this->unichr(0x29FF).
+            $this->unichr(0x2B00).'-'.$this->unichr(0x2BFF).
+            $this->unichr(0x2C60).'-'.$this->unichr(0x2C7F).
+            $this->unichr(0x2E00).'-'.$this->unichr(0x2E7F).
+            $this->unichr(0x3000).'-'.$this->unichr(0x303F).
+            $this->unichr(0xA490).'-'.$this->unichr(0xA4CF).
+            $this->unichr(0xE000).'-'.$this->unichr(0xF8FF).
+            $this->unichr(0xFE00).'-'.$this->unichr(0xFE0F).
+            $this->unichr(0xFE30).'-'.$this->unichr(0xFE4F).
+            $this->unichr(0x1F000).'-'.$this->unichr(0x1F02F).
+            $this->unichr(0x1F0A0).'-'.$this->unichr(0x1F0FF).
+            $this->unichr(0x1F100).'-'.$this->unichr(0x1F64F).
+            $this->unichr(0x1F680).'-'.$this->unichr(0x1F6FF).
+            $this->unichr(0x1F910).'-'.$this->unichr(0x1F918).
+            $this->unichr(0x1F980).'-'.$this->unichr(0x1F9C0).
+        ']/u';
     }
     
-    public function clean()
+    //implements Detector
+    public function detect($text)
     {
-        return function($emojis){
-            if($emojis){
-                foreach($emojis as &$match) {    
-                    $match = '';
-                }
-                return $match;
-            }
-        };
+        $emojis=false;
+        $pattern = $this->getPattern();
+        preg_match_all($pattern,$text,$emojis);
+        return $emojis;
     }
     
-    public function dec()
+    //implements Adapter
+    public function replace($text,$handler)
     {
-        return function($emojis){
-            if($emojis)
-                foreach($emojis as &$match){
-                    $match= $this->entities($match);       
-                }
-            return $match;
-        };
-    }    
+        if(!$handler) return $text;
+        try{
+            switch($handler){
+                case 'hex':$callback = $this->hex();break;
+                case 'dec':$callback = $this->dec();break;
+                case 'clean':$callback = $this->clean();break;
+                default:$callback = null;
+            }
+            if(!$callback) return $text;//or throw exception
+            $pattern = $this->getPattern();
+            $replace = preg_replace_callback($pattern,$callback,$text);
+        }catch(Exception $e){
+            return $text;
+        }
+        return $replace;
+    }
+ 
 }

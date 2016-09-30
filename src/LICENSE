@@ -1,34 +1,3 @@
-#Feature
-1. detected emoji char only
-2. replace emoji char only
-3. store emoji as HTML numeric character (it's meand you do not need to set MySql connect and table character set to utf8mb4)
-4. WYSWYG(What's Your See,What's Your Get)
-5. Zero Dependence
-
-#Install
-- composer require hidehalo/emoji
-
-#Use
-##see the test.php
-
-```
-<?php
-require "Emoji.php";
-require_once "/Adapter/HtmlAdapter.php";
-try{
-$emoji = new Emoji(new HtmlAdapter());
-$str = "无敌:😍";
-$str = $emoji->replace($str,'dec');
-}catch(Exception $e){
-    print $e->getMessage();
-}
-print $str;
-?>
-```
-- result:无敌:&#128525;
-
-#License
-
 The MIT License (MIT)
 
 Copyright (c) Fri Sep 30 2016 hidehao
@@ -49,4 +18,3 @@ FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
 COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORTOR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-

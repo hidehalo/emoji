@@ -1,4 +1,5 @@
 <?php
+namespace Hidehalo\String\Emoji;
 interface EmojiUnicode
 {
     //symbol to unicode
@@ -1288,4 +1289,6 @@ interface EmojiUnicode
     const CHARACTER_PART_ALTERNATION_MARK = "\u{303D}";
     const CHARACTER_CIRCLED_IDEOGRAPH_CONGRATULATION = "\u{3297}";
     const CHARACTER_CIRCLED_IDEOGRAPH_SECRET = "\u{3299}";
+    function unichr($i);
+    function ordutf8($string, &$offset);
 }
