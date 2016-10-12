@@ -1,9 +1,9 @@
 #Feature
 1. detected emoji char only
-2. replace emoji char only
-3. store emoji as HTML numeric character (it's meand you do not need to set MySql connect and table character set to utf8mb4)
-4. WYSWYG(What's Your See,What's Your Get)
-5. Zero Dependence
+2. convert emoji charracter to HTML code(it's meand you do not need to set MySql connect and table character set to utf8mb4)
+3. WYSWYG(What's Your See,What's Your Get)
+4. Zero Dependence
+5. Lightweight
 
 #Install
 - composer require hidehalo/emoji
