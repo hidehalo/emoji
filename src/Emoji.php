@@ -15,9 +15,9 @@ class Emoji
         return $this->adapter->detect($text);
     }
     
-    public function replace($text,$handler)
+    public function replace($text,$format=null)
     {
-        return $this->adapter->replace($text,$handler);
+        return $this->adapter->replace($text,$format);
     }
 
 }

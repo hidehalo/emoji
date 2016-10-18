@@ -14,18 +14,40 @@
 ```
 <?php
 require "Emoji.php";
-require_once "/Adapter/HtmlAdapter.php";
-try{
-$emoji = new Emoji(new HtmlAdapter());
-$str = "无敌:😍";
-$str = $emoji->replace($str,'dec');
-}catch(Exception $e){
+require_once __DIR__."/Adapter/HtmlAdapter.php";
+use Hidehalo\String\Emoji\HtmlAdapter;
+use Hidehalo\String\Emoji;
+try {
+    $emoji = new Emoji(new HtmlAdapter());
+    $str = "无敌abc648@XXX.c0m:😍";
+    //convert emoji characters to html code
+    $strdec = $emoji->replace($str,'dec');
+    $strhex = $emoji->replace($str,'hex');
+    $strclean = $emoji->replace($str,'clean');
+} catch(Exception $e) {
     print $e->getMessage();
 }
-print $str;
-?>
+print "origin: ".$str.PHP_EOL;
+print "convert emoji to decimal html code:".$strdec.PHP_EOL;
+print "convert emoji to heximal html code".$strhex.PHP_EOL;
+print "no emoji:".$strclean.PHP_EOL;
+
 ```
-- result:无敌:&#128525;
+
+### result on html:
+- oriigin: 无敌abc648@XXX.c0m:😍
+- convert emoji to decimal html code:无敌abc648@XXX.c0m:&#128525;
+- convert emoji to heximal html code无敌abc648@XXX.c0m:&#x1f60d;
+- no emoji:无敌abc648@XXX.c0m:
+
+### result on cli:
+```
+origin: 无敌abc648@XXX.c0m:😍
+convert emoji to decimal html code:无敌abc648@XXX.c0m:&#128525;
+convert emoji to heximal html code无敌abc648@XXX.c0m:&#x1f60d;
+no emoji:无敌abc648@XXX.c0m:
+
+```
 
 #License
 
