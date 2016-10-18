@@ -9,7 +9,7 @@ abstract class Adapter implements EmojiUnicode,Detector
     protected $pattern;
 
     abstract protected function entities($string);  
-    abstract protected function replace($text,$handler);
+    abstract protected function replace($text,$format);
     
     public function getPattern()
     {

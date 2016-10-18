@@ -4,22 +4,19 @@ require_once "Adapter.php";
 use Hidehalo\String\Emoji\Adapter;
 class HtmlAdapter extends Adapter
 {    
-    //Inheritance Adapter
-    //protected $pattern;
     
-    //replace to unicode hex value
     private function hex()
     {
         return function($emojis) {
             if($emojis){
                 foreach($emojis as &$match) {    
+                    $match = $this->entities($match,1);  
                 }
                 return $match;
             }
         };
     }
     
-    //get ascii and Chinese only
     private function clean()
     {
         return function($emojis) {
@@ -32,7 +29,6 @@ class HtmlAdapter extends Adapter
         };
     }
     
-    //replace unicode dec value
     private function dec()
     {
         return function($emojis){
@@ -44,21 +40,23 @@ class HtmlAdapter extends Adapter
         };
     }
     
-    //extend mbstring convert unicode value to char
-    protected function mbunichr($u)
+    protected function mbunichr($code)
     {
-        $unichar = mb_convert_encoding('&#'.$u.';','UTF-8','HTML-ENTITIES');
-        return $unichar;
+        //convert Unicode to UTF-8 encoding character
+        $character = mb_convert_encoding('&#'.$code.';','UTF-8','HTML-ENTITIES');
+        return $character;
     }
     
-    //implements EmojiUnicode
-    public function unichr($i) 
+    public function unichr($code)
     {
-        return iconv('UCS-4LE', 'UTF-8', pack('V', $i));
+        //convert Unicode to UTF-8 encoding character
+        $character = iconv('UCS-4LE', 'UTF-8', pack('V', $code));
+        return $character;
     }
     
-    //implements EmojiUnicode
-    // source - http://php.net/manual/en/function.ord.php#109812
+    /* ascii value of emoji character
+     * source - http://php.net/manual/en/function.ord.php#109812
+     */
     public function ordutf8($string, &$offset) 
     {
         $code = ord(substr($string, $offset,1));
@@ -79,8 +77,7 @@ class HtmlAdapter extends Adapter
         return $code;
     }
     
-    //implements EmojiUnicode
-    public function entities( $string )
+    public function entities( $string ,$hex =false)
     {
         $stringBuilder = "";
         $offset = 0;
@@ -88,13 +85,13 @@ class HtmlAdapter extends Adapter
             return "";
         }
         while ( $offset >= 0 ) {
-            $decValue = $this->ordutf8( $string, $offset );
-            $char = $this->unichr($decValue);
+            $asciiValue = $this->ordutf8( $string, $offset);
+            $char = $this->unichr($asciiValue);
             $htmlEntited = htmlentities( $char );
             if( $char != $htmlEntited ){
                 $stringBuilder .= $htmlEntited;
-            } elseif( $decValue >= 128 ){
-                $stringBuilder .= "&#" . $decValue . ";";
+            } elseif( $asciiValue >= 128 ){
+                $stringBuilder .= "&#" . ($hex?dechex($asciiValue):$asciiValue) . ";";
             } else {
                 $stringBuilder .= $char;
             }
@@ -135,7 +132,6 @@ class HtmlAdapter extends Adapter
         ']/u';
     }
     
-    //implements Detector
     public function detect($text)
     {
         $emojis=false;
@@ -144,12 +140,11 @@ class HtmlAdapter extends Adapter
         return $emojis;
     }
     
-    //implements Adapter
-    public function replace($text,$handler)
+    public function replace($text,$format)
     {
-        if(!$handler) return $text;
+        if(!$format) return $text;
         try{
-            switch($handler){
+            switch($format){
                 case 'hex':$callback = $this->hex();break;
                 case 'dec':$callback = $this->dec();break;
                 case 'clean':$callback = $this->clean();break;
@@ -157,8 +152,8 @@ class HtmlAdapter extends Adapter
             }
             if(!$callback) return $text;//or throw exception
             $pattern = $this->getPattern();
-            $replace = preg_replace_callback($pattern,$callback,$text);
-        }catch(Exception $e){
+            $replace = @preg_replace_callback($pattern,$callback,$text);
+        } catch(Exception $e) {
             return $text;
         }
         return $replace;
