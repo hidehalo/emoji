@@ -91,7 +91,7 @@ class HtmlAdapter extends Adapter
             if( $char != $htmlEntited ){
                 $stringBuilder .= $htmlEntited;
             } elseif( $asciiValue >= 128 ){
-                $stringBuilder .= "&#" . ($hex?dechex($asciiValue):$asciiValue) . ";";
+                $stringBuilder .= "&#" . ($hex?"x".dechex($asciiValue):$asciiValue) . ";";
             } else {
                 $stringBuilder .= $char;
             }
