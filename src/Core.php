@@ -7,9 +7,10 @@
  */
 
 namespace Hidehalo\Emoji;
+use Hidehalo\Emoji\Feature\FeatureInterface;
 use Hidehalo\Emoji\Unicode\Emoji;
 
-class Core extends Emoji
+class Core extends Emoji implements FeatureInterface
 {
     private $detector;
     private $adapter;
