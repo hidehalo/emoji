@@ -160,3 +160,8 @@ class HtmlAdapter extends Adapter
     }
  
 }
+
+$h = new HtmlAdapter();
+$offset = 0;
+$str = '😂';
+echo $h->ordutf8($str,$offset);
