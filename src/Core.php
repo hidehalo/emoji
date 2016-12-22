@@ -12,37 +12,79 @@ class Core
 {
     /**
      * character to ascii value
-     * @src - http://php.net/manual/en/function.ord.php#109812
+     * @param string $string 
+     * @param integer $offset 
      */
-    public function ordutf8($string, $offset = 0)
+    function getUnicodeValue($unichar,$bytesnumber)
     {
-        if ($offset >= strlen($string)) {
-            return -1;
-        }
-
-        $ascii = ord(substr($string, $offset,1));
-
-        if ($ascii > 0x7f) {
-            switch($ascii&0xf0){
-                case 0xf0:$bytesnumber = 4;break;
-                case 0xe0:$bytesnumber = 3;break;
-                case 0xd1:;
-                case 0xd0:$bytesnumber = 2;break;
-                default:throw new \Exception('Invalid UTF-8 Character');
+        $offset = 0;
+        $highChar = substr($unichar, $offset ,1);
+        $ascii = ord($highChar);
+        if ($bytesnumber>1) {
+            $code = ($ascii) & (2 ** (7 - $bytesnumber) - 1);
+            for ($i = 1;$i<$bytesnumber;$i++) {
+                $char = substr($unichar, $offset + $i, 1);
+                $code =  ($code << 6) | (ord($char) & 0x3f);
             }
-            for($i = 1,$code = $ascii;$i<$bytesnumber;$i++){
-               $code =  ($code << 6)|ord(substr($string,$offset+$i,1));
-            }
-
-            return $code;
+            $ascii = $code;
         }
-
+        
         return $ascii;
+    }
+
+    /**
+     * get Unicode bytes number
+     */
+    function getBytesNumber($char)
+    {
+        $ascii = ord($char);
+        $bytesnumber = 1;
+        if ($ascii > 0x7f) {
+            switch ($ascii&0xf0) {
+                case 0xfd:
+                    $bytesnumber = 6;
+                    break;
+                case 0xf8:
+                    $bytesnumber = 5;
+                    break;
+                case 0xf0:
+                    $bytesnumber = 4;
+                    break;
+                case 0xe0:
+                    $bytesnumber = 3;
+                    break;
+                case 0xd1:;
+                case 0xd0:
+                    $bytesnumber = 2;
+                    break;
+            }
+        }
+
+        return $bytesnumber;
+    }
+    
+    /**
+     * get Unicodes array by string
+     */
+    function unicodeString($string,$rules = array())
+    {
+        $len = strlen($string);
+        $unicode = [];
+        $offset = 0;
+        while($offset < $len){
+            $highChar = substr($string, $offset,1);
+            $bytesnumber = $this->getBytesNumber($highChar);
+            $unichar = substr($string , $offset ,$bytesnumber);
+            $offset += $bytesnumber;
+            $unicode[] = $this->getUnicodeValue($unichar,$bytesnumber);
+        }
+        
+        return $unicode;
     }
 }
 
 $t = new Core();
 $offset = 0;
-$str = '😂';
-echo 'ascii:0x'.dechex($t->ordutf8($str,$offset)).PHP_EOL;
+$str = '😂,😂,😂,😂';
+print_r($t->unicodeString($str));
 
