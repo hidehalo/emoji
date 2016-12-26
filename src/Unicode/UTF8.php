@@ -4,6 +4,23 @@ namespace Hidehalo\Emoji\Unicode;
 
 abstract class UTF8 implements Unicode
 {
+    protected $unicode = null;
+    protected $bytes = [];
+    protected $symbol = '';
+    protected $bytesNumber = 1;
+
+    /**
+     * get native emoji symbol by unicode
+     * @param $unicode
+     * @return string $symbol
+     */
+    function getSymbol($unicode)
+    {
+        $symbol = iconv('UCS-4LE', 'UTF-8', pack('V', $unicode));
+
+        return $symbol;
+    }
+
     /**
      * character of unicode symbol convert to unicode value
      * @param string $symbol
@@ -70,7 +87,7 @@ abstract class UTF8 implements Unicode
         for ($i=0; $i<$bytesNumber; $i++) {
             $bytes[] = ord(substr($symbol,$i,1));
         }
-    }
 
-    abstract function getNative($unicode);
+        return $bytes;
+    }
 }

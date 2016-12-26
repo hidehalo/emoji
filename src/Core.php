@@ -7,14 +7,11 @@
  */
 
 namespace Hidehalo\Emoji;
-use Hidehalo\Emoji\Feature\FeatureInterface;
+use Hidehalo\Emoji\Features\FeaturesInterface;
 use Hidehalo\Emoji\Unicode\Emoji;
 
-class Core extends Emoji implements FeatureInterface
+class Core extends Emoji implements FeaturesInterface
 {
-    private $detector;
-    private $adapter;
-
     /**
      * get unicode array from string
      * @param string $string
@@ -35,6 +32,5 @@ class Core extends Emoji implements FeatureInterface
 
         return $unicode;
     }
-
 }
 
