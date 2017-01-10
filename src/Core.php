@@ -7,30 +7,21 @@
  */
 
 namespace Hidehalo\Emoji;
-use Hidehalo\Emoji\Features\FeaturesInterface;
-use Hidehalo\Emoji\Unicode\Emoji;
 
-class Core extends Emoji implements FeaturesInterface
+use Hidehalo\Emoji\Features\EmojiParser;
+
+class Core
 {
-    /**
-     * get unicode array from string
-     * @param string $string
-     * @return array $unicode
-     */
-    function unicodeArray($string)
+    function __construct()
     {
-        $len = strlen($string);
-        $unicode = [];
-        $offset = 0;
-        while($offset < $len){
-            $highChar = substr($string, $offset,1);
-            $bytesNumber = $this->getBytesNumber($highChar);
-            $symbol = substr($string , $offset ,$bytesNumber);
-            $offset += $bytesNumber;
-            $unicode[] = $this->getUnicode($symbol,$bytesNumber);
-        }
+        $this->parser = new EmojiParser();
+    }
 
-        return $unicode;
+    function filter($string)
+    {
+        $result = $this->parser->buildRegex()->clean($string);
+
+        return $result;
     }
 }
 
