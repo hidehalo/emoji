@@ -154,5 +154,5 @@ class Psr4Autoloader
     }
 }
 class EmojiAutoloader extends Psr4Autoloader{}
-EmojiAutoloader::addNamespace('\Hidehalo\Emoji',__DIR__);
+EmojiAutoloader::addNamespace('\Hidehalo\Emoji', '/../src');
 EmojiAutoloader::register();
