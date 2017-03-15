@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: TianChen
- * Date: 16/12/23
- * Time: 00:22
- */
-
 namespace Hidehalo\Emoji\Features;
 
 /*  @link{wiki}:
@@ -23,6 +16,5 @@ namespace Hidehalo\Emoji\Features;
 
 interface ParserInterface
 {
-    function buildRegex($map);
-    function parse($string);
+    public function parse($string);
 }

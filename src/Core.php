@@ -12,16 +12,14 @@ use Hidehalo\Emoji\Features\EmojiParser;
 
 class Core
 {
-    function __construct()
+    public function __construct()
     {
         $this->parser = new EmojiParser();
     }
 
-    function filter($string)
+    public function filte($string)
     {
-        $result = $this->parser->buildRegex()->clean($string);
-
-        return $result;
+        return $this->parser->clean($string);
     }
 }
 

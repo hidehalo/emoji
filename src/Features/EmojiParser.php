@@ -11,7 +11,7 @@ namespace Hidehalo\Emoji\Features;
 
 use Hidehalo\Emoji\Unicode\Emoji;
 
-class EmojiParser
+class EmojiParser extends UnicodeParser
 {
     //http://apps.timwhitlock.info/emoji/tables/unicode
     protected $maps = [
@@ -44,20 +44,12 @@ class EmojiParser
     ];
     protected $pattern;
 
-    function buildRegex($maps = [])
+    public function __construct($config = [])
     {
-        if (!$maps) {
-            $maps = $this->maps;
+        if (isset($config['maps'])) {
+            $this->maps = $config['maps'];
         }
-        $pattern = '';
-        foreach ($maps as $range) {
-            $min = $range[0];
-            $max = $range[1];
-            $pattern .=  $this->getSymbol($min).'-'.$this->getSymbol($max);
-        }
-        $this->pattern = '/['.$pattern.']/u';
-
-        return $this;
+        $this->pattern = $this->buildRegex($this->maps);
     }
 
     /**
@@ -65,7 +57,7 @@ class EmojiParser
      * @param $string
      * @return array [offset => emoji object]
      */
-    function parse($string)
+    public function parse($string)
     {
         if (!$this->pattern) {
            return [];
@@ -73,7 +65,7 @@ class EmojiParser
         $matchesNo = preg_match_all($this->pattern,$string,$matches,PREG_OFFSET_CAPTURE);
         if ($matchesNo>0 && $matches) {
             foreach ($matches as $emojis) {
-                foreach($emojis as $emoji){
+                foreach ($emojis as $emoji) {
                     $symbol = $emoji[0];
                     $offset = $emoji[1];
                     $bytes = $this->getBytes($symbol);
@@ -89,7 +81,7 @@ class EmojiParser
         return [];
     }
 
-    function clean($string)
+    public function clean($string)
     {
         if (!$this->pattern) {
             return $string;
@@ -100,7 +92,7 @@ class EmojiParser
         return $count>0?$result:$string;
     }
 
-    function replace($string,callable $callback)
+    public function replace($string,callable $callback)
     {
         if (!$this->pattern) {
             return $string;
@@ -111,86 +103,18 @@ class EmojiParser
         return $count>0?$result:$string;
     }
 
-    /**
-     * get native emoji symbol by unicode
-     * @param $unicode
-     * @return string $symbol
-     */
-    protected function getSymbol($unicode)
+    protected function buildRegex($maps)
     {
-        $symbol = iconv('UCS-4LE', 'UTF-8', pack('V', $unicode));
-
-        return $symbol;
-    }
-
-    /**
-     * character of unicode symbol convert to unicode value
-     * @param string $symbol
-     * @param integer $bytes
-     * @return integer $ascii
-     */
-    protected function getUnicode($symbol,$bytes = 1)
-    {
-        $offset = 0;
-        $highChar = substr($symbol, $offset ,1);
-        $ascii = ord($highChar);
-        if ($bytes > 1) {
-            $code = ($ascii) & (2 ** (7 - $bytes) - 1);
-            for ($i = 1;$i<$bytes;$i++) {
-                $char = substr($symbol, $offset + $i, 1);
-                $code =  ($code << 6) | (ord($char) & 0x3f);
+        $pattern = '';
+        if ($maps) {
+            foreach ($maps as $range) {
+                $min = $range[0];
+                $max = $range[1];
+                $pattern .= $this->getSymbol($min) . '-' . $this->getSymbol($max);
             }
-            $ascii = $code;
+            $pattern = '/['.$pattern.']/u';
         }
 
-        return $ascii;
+        return $pattern;
     }
-
-    /**
-     * get Unicode symbol bytes number
-     * @param string $symbol
-     * @return integer $bytesNumber
-     */
-    protected function getBytesNumber($symbol)
-    {
-        $ascii = ord($symbol);
-        $bytesNumber = 1;
-        if ($ascii > 0x7f) {
-            switch ($ascii&0xf0) {
-                case 0xfd:
-                    $bytesNumber = 6;
-                    break;
-                case 0xf8:
-                    $bytesNumber = 5;
-                    break;
-                case 0xf0:
-                    $bytesNumber = 4;
-                    break;
-                case 0xe0:
-                    $bytesNumber = 3;
-                    break;
-                case 0xd1:
-                case 0xd0:
-                    $bytesNumber = 2;
-                    break;
-            }
-        }
-
-        return $bytesNumber;
-    }
-
-    /**
-     * @param $symbol
-     */
-    protected function getBytes($symbol)
-    {
-        $bytesNumber = $this->getBytesNumber($symbol);
-        $bytes = [];
-        for ($i=0; $i<$bytesNumber; $i++) {
-            $bytes[] = ord(substr($symbol,$i,1));
-        }
-
-        return $bytes;
-    }
-
 }

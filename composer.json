@@ -1,7 +1,10 @@
 {
     "name": "hidehalo/emoji",
-    "description": "detected emoji and stored for web",
+    "description": "filtes emoji symbols for you",
     "type": "library",
+    "require-dev": {
+        "phpunit/phpunit": "5.7"
+    },
     "license": "MIT",
     "authors": [
         {
@@ -9,5 +12,6 @@
             "email": "tianchen_cc@yeah.net"
         }
     ],
+    "minimum-stability": "stable",
     "require": {}
 }

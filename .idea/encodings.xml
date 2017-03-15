@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/src/Core.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/Features/EmojiParser.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/Features/ParserInterface.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/Features/UnicodeParser.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/Unicode/Emoji.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/Unicode/UTF8.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/Unicode/Unicode.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/autoload.php" charset="UTF-8" />
+  </component>
+</project>

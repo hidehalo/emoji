@@ -9,7 +9,7 @@ class UTF8 implements Unicode
     protected $symbol = '';
     protected $bytesNumber = 1;
 
-    function __construct($symbol = '',$bytes =[],$unicode = null,$bytesNumber = 1)
+    public function __construct($symbol = '',$bytes =[],$unicode = null,$bytesNumber = 1)
     {
         $this->bytes = $bytes;
         $this->bytesNumber = $bytesNumber;
