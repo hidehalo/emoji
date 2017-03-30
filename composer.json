@@ -16,9 +16,9 @@
     "require": {},
     "autoload": {
         "psr-4": {
-            "\\Hidehalo\\": "src/",
-            "\\Hidehalo\\Features\\": "src/Features/",
-            "\\Hidehalo\\Unicode\\": "src/Unicode/"
+            "Hidehalo\\Emoji\\": "src/",
+            "Hidehalo\\Emoji\\Features\\": "src/Features/",
+            "Hidehalo\\Emoji\\Unicode\\": "src/Unicode/"
         }
     }
 }
