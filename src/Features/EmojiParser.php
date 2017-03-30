@@ -34,8 +34,8 @@ class EmojiParser extends UnicodeParser
         [0x1F0A0,0x1F0FF],
         [0x1F100,0x1F64F],
         [0x1F680,0x1F6FF],
-        [0x1F910,0x1F918],
-        [0x1F980,0x1F9C0],
+        [0x1F910,0x1F96B],
+        [0x1F980,0x1F9E0],
     ];
     /**
      * @var string $pattern;
