@@ -1,20 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: TianChen
- * Date: 17/1/7
- * Time: 15:59
- */
 
 namespace Hidehalo\Emoji\Features;
 
-
 use Hidehalo\Emoji\Unicode\Emoji;
+use Hidehalo\Emoji\Features\Protocol\Utf8String;
+use Hidehalo\Emoji\Features\Protocol\ProtocolInterface;
 
 class EmojiParser extends UnicodeParser
 {
     //http://apps.timwhitlock.info/emoji/tables/unicode
-    protected $maps = [
+    private $maps = [
         [0x0080,0x02AF],
         [0x0300,0x03FF],
         [0x0600,0x06FF],
@@ -42,13 +37,19 @@ class EmojiParser extends UnicodeParser
         [0x1F910,0x1F918],
         [0x1F980,0x1F9C0],
     ];
+    /**
+     * @var string $pattern;
+     */
     protected $pattern;
+    /**
+     * @var ProtocolInterface $protocol
+     */
+    protected $protocol;
 
-    public function __construct($config = [])
+    public function __construct(array $config = [])
     {
-        if (isset($config['maps'])) {
-            $this->maps = $config['maps'];
-        }
+        $protocolName = (isset($config['protocol_name'])) ? $config['protocol_name'] : Utf8String::class;
+        $this->protocol = ProtocolFactory::generate($protocolName);
         $this->pattern = $this->buildRegex($this->maps);
     }
 
@@ -92,18 +93,54 @@ class EmojiParser extends UnicodeParser
         return $count>0?$result:$string;
     }
 
-    public function replace($string,callable $callback)
+    public function utf8stringEncode($string)
     {
-        if (!$this->pattern) {
-            return $string;
-        }
-        $count = 0;
-        $result = preg_replace_callback($this->pattern,$callback,$string,-1,$count);
+        $protocol = $this->protocol;
+        $encodeString = $this->replace($string, function ($matches) use ($protocol) {
+            if (is_array($matches) && !empty($matches)) {
+                foreach ($matches as &$matched) {
+                    $matched = $protocol->encode($matched);
 
-        return $count>0?$result:$string;
+                    return $matched;
+                }
+            }
+
+            return '';
+        });
+
+        return $encodeString;
     }
 
-    protected function buildRegex($maps)
+    public function utf8StringDecode($string)
+    {
+        $protocol = $this->protocol;
+        $decodeString = $this->replace($string, function ($matches) use ($protocol) {
+            if (is_array($matches) && !empty($matches)) {
+                foreach ($matches as &$matched) {
+                    $matched = $protocol->decode($matched);
+
+                    return $matched;
+                }
+            }
+
+            return '';
+        }, $protocol->getPattern());
+
+        return $decodeString;
+    }
+
+    private function replace($string,callable $callback, $pattern = '')
+    {
+        if (!$pattern) {
+            $pattern = $this->pattern;
+        }
+        $count = 0;
+        $result = preg_replace_callback($pattern,$callback,$string,-1,$count);
+
+        return $count>0 ? $result : $string;
+    }
+
+    private function buildRegex($maps)
     {
         $pattern = '';
         if ($maps) {

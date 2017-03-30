@@ -9,7 +9,7 @@ abstract class UnicodeParser implements ParserInterface
      * @param $unicode
      * @return string $symbol
      */
-    protected function getSymbol($unicode)
+    public static function getSymbol($unicode)
     {
         $symbol = iconv('UCS-4LE', 'UTF-8', pack('V', $unicode));
 
@@ -22,7 +22,7 @@ abstract class UnicodeParser implements ParserInterface
      * @param integer $bytes
      * @return integer $ascii
      */
-    protected function getUnicode($symbol,$bytes = 1)
+    public static function getUnicode($symbol,$bytes = 1)
     {
         $offset = 0;
         $highChar = substr($symbol, $offset ,1);
@@ -44,7 +44,7 @@ abstract class UnicodeParser implements ParserInterface
      * @param string $symbol
      * @return integer $bytesNumber
      */
-    protected function getBytesNumber($symbol)
+    public static function getBytesNumber($symbol)
     {
         $ascii = ord($symbol);
         $bytesNumber = 1;
@@ -75,9 +75,9 @@ abstract class UnicodeParser implements ParserInterface
     /**
      * @param $symbol
      */
-    protected function getBytes($symbol)
+    public static function getBytes($symbol)
     {
-        $bytesNumber = $this->getBytesNumber($symbol);
+        $bytesNumber = self::getBytesNumber($symbol);
         $bytes = [];
         for ($i=0; $i<$bytesNumber; $i++) {
             $bytes[] = ord(substr($symbol,$i,1));

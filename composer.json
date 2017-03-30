@@ -13,5 +13,12 @@
         }
     ],
     "minimum-stability": "stable",
-    "require": {}
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "\\Hidehalo\\": "src/",
+            "\\Hidehalo\\Features\\": "src/Features/",
+            "\\Hidehalo\\Unicode\\": "src/Unicode/"
+        }
+    }
 }
