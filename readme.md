@@ -1,55 +1,32 @@
-#Feature
-1. detected emoji char only
-2. convert emoji charracter to HTML code(it's meand you do not need to set MySql connect and table character set to utf8mb4)
+# Why
+if you do not want to set MySQL Server default character encode and connections of MySQL and etc,or your MySQL do not support utf8mb4 character,you could think about use this library :)
+# Features
+1. Detected emoji symbols only,and parse to utf-8 bytes or unicode decimal value
+2. Replace emoji symbols to other texts and turn it back
 3. WYSWYG(What's Your See,What's Your Get)
-4. Zero Dependence
+4. Zero dependence
 5. Lightweight
 
-#Install
+# Install
 - composer require hidehalo/emoji
 
-#Use
-##see the test.php
+# How to Use
 
-```
-<?php
-require "Emoji.php";
-require_once __DIR__."/Adapter/HtmlAdapter.php";
-use Hidehalo\String\Emoji\HtmlAdapter;
-use Hidehalo\String\Emoji;
-try {
-    $emoji = new Emoji(new HtmlAdapter());
-    $str = "无敌abc648@XXX.c0m:😍";
-    //convert emoji characters to html code
-    $strdec = $emoji->replace($str,'dec');
-    $strhex = $emoji->replace($str,'hex');
-    $strclean = $emoji->replace($str,'clean');
-} catch(Exception $e) {
-    print $e->getMessage();
-}
-print "origin: ".$str.PHP_EOL;
-print "convert emoji to decimal html code:".$strdec.PHP_EOL;
-print "convert emoji to heximal html code".$strhex.PHP_EOL;
-print "no emoji:".$strclean.PHP_EOL;
+require_once vendor/autoload.php
 
-```
+use Hidehalo\Emoji\Features\EmojiParser;
 
-### result on html:
-- oriigin: 无敌abc648@XXX.c0m:😍
-- convert emoji to decimal html code:无敌abc648@XXX.c0m:&#128525;
-- convert emoji to heximal html code无敌abc648@XXX.c0m:&#x1f60d;
-- no emoji:无敌abc648@XXX.c0m:
+#if you want to parse emojis for a text
+$parser = new EmojiParser();
+$parser->parse($contents);
+#and it will return an array which contained object instance of Hidehalo\Emoji\Unicode\Emoji
+#or it will return a empty array like this : []
+#if you want to replace those emoji symbols to ohter marked texts and has ability to turn those back,it has a built-in  Hidehalo\Emoji\Features\Protocol could do this
+$encoded = $parser->utf8stringEncode($raw);
+$decoded = $parser->utf8stringDecode($encoded);
+#and $decoded will equals $raw,it is real very simple
 
-### result on cli:
-```
-origin: 无敌abc648@XXX.c0m:😍
-convert emoji to decimal html code:无敌abc648@XXX.c0m:&#128525;
-convert emoji to heximal html code无敌abc648@XXX.c0m:&#x1f60d;
-no emoji:无敌abc648@XXX.c0m:
-
-```
-
-#License
+# License
 
 The MIT License (MIT)
 
