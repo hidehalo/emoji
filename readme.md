@@ -23,9 +23,7 @@ $parser->parse($contents);
 
 #and it will return an array which contained object instance of Hidehalo\Emoji\Unicode\Emoji
 #or it will return a empty array like this : []
-#if you want to replace those emoji symbols to ohter marked texts and has ability to turn those back,it has a built-in 
-
-Hidehalo\Emoji\Features\Protocol could do this
+#if you want to replace those emoji symbols to ohter marked texts and has ability to turn those back,it has a built-in Hidehalo\Emoji\Features\Protocol could do this
 $encoded = $parser->utf8stringEncode($raw);
 $decoded = $parser->utf8stringDecode($encoded);
 # and $decoded will equals $raw,it is real very simple
