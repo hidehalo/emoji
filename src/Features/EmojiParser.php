@@ -41,15 +41,9 @@ class EmojiParser extends UnicodeParser
      * @var string $pattern;
      */
     protected $pattern;
-    /**
-     * @var ProtocolInterface $protocol
-     */
-    protected $protocol;
 
     public function __construct(array $config = [])
     {
-        $protocolName = (isset($config['protocol_name'])) ? $config['protocol_name'] : Utf8String::class;
-        $this->protocol = ProtocolFactory::generate($protocolName);
         $this->pattern = $this->buildRegex($this->maps);
     }
 
@@ -93,43 +87,7 @@ class EmojiParser extends UnicodeParser
         return $count>0?$result:$string;
     }
 
-    public function utf8stringEncode($string)
-    {
-        $protocol = $this->protocol;
-        $encodeString = $this->replace($string, function ($matches) use ($protocol) {
-            if (is_array($matches) && !empty($matches)) {
-                foreach ($matches as &$matched) {
-                    $matched = $protocol->encode($matched);
-
-                    return $matched;
-                }
-            }
-
-            return '';
-        });
-
-        return $encodeString;
-    }
-
-    public function utf8StringDecode($string)
-    {
-        $protocol = $this->protocol;
-        $decodeString = $this->replace($string, function ($matches) use ($protocol) {
-            if (is_array($matches) && !empty($matches)) {
-                foreach ($matches as &$matched) {
-                    $matched = $protocol->decode($matched);
-
-                    return $matched;
-                }
-            }
-
-            return '';
-        }, $protocol->getPattern());
-
-        return $decodeString;
-    }
-
-    private function replace($string,callable $callback, $pattern = '')
+    public function replace($string,callable $callback, $pattern = '')
     {
         if (!$pattern) {
             $pattern = $this->pattern;

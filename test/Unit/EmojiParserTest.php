@@ -1,25 +1,29 @@
 <?php
 
-use Hidehalo\Emoji\Features\EmojiParser;
 use PHPUnit\Framework\TestCase;
+use Hidehalo\Emoji\Unicode\Emoji;
+use Hidehalo\Emoji\Features\EmojiParser;
 
 class TestEmojiParser extends TestCase
 {
-    public function testClean()
+    public function __construct()
     {
-        $parser = new EmojiParser();
-        $string = 'Hello ☻';
-        $result = $parser->clean($string);
-        $this->assertEquals($result, 'Hello ');
+        parent::__construct();
+        $this->case = new EmojiParser();
     }
 
-    public function testUtf8StringEncodeAndDecode()
+    public function testClean()
     {
-        $parser = new EmojiParser();
         $string = 'Hello ☻';
-        $result = $parser->utf8stringEncode($string);
-        $this->assertEquals($result, 'Hello [:9787]');
-        $result = $parser->utf8StringDecode($result);
-        $this->assertEquals($string, $result);
+        $ret = $this->case->clean($string);
+        $this->assertEquals($ret, 'Hello ');
+    }
+
+    public function testParse()
+    {
+        $string = 'Hello ☻';
+        $ret = $this->case->parse($string);
+        $this->assertNotEmpty($ret);
+        $this->assertInstanceOf(Emoji::class, $ret[array_rand($ret)]);
     }
 }

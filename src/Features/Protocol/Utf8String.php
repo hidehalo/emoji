@@ -12,8 +12,8 @@ use Hidehalo\Emoji\Features\UnicodeParser;
 
 class Utf8String implements ProtocolInterface
 {
-    private $format = "[:%d]";
-    private $pattern = '/\[\:\d+\]/';
+    protected $format = "[:%d]";
+    protected $pattern = '/\[\:\d+\]/';
 
     public function encode($contents, array $options = [])
     {
@@ -38,7 +38,7 @@ class Utf8String implements ProtocolInterface
         return $this->pattern;
     }
 
-    private function getFormat()
+    protected function getFormat()
     {
         return $this->format;
     }

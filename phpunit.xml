@@ -22,10 +22,11 @@
     </testsuites>
 
     <filter>
-        <whitelist>
-            <directory suffix=".php">src</directory>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">src/</directory>
             <exclude>
-                <directory suffix=".php">src/Test</directory>
+                <directory suffix=".php">src/test/Unit/</directory>
+                <file>src/test/Unit/</file>
             </exclude>
         </whitelist>
     </filter>
