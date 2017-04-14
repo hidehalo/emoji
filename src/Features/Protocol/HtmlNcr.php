@@ -12,8 +12,8 @@ use Hidehalo\Emoji\Features\UnicodeParser;
 
 class HtmlNcr extends Utf8String implements ProtocolInterface
 {
-    protected $format = "&%d;";
-    protected $pattern = '/&\d+;/';
+    protected $format = "&#%d;";
+    protected $pattern = '/&#\d+;/';
 
     public function encode($contents, array $options = [])
     {
@@ -28,7 +28,7 @@ class HtmlNcr extends Utf8String implements ProtocolInterface
     public function decode($contents, array $options = [])
     {
         if (isset($options['raw']) && $options['raw'] == true) {
-            $unicode = (int) substr($contents,1,-1);
+            $unicode = (int) substr($contents,2,-1);
             $decoded = UnicodeParser::getSymbol($unicode);
         } else {
             $decoded = $contents;

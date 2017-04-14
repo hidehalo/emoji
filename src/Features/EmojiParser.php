@@ -54,9 +54,11 @@ class EmojiParser extends UnicodeParser
      */
     public function parse($string)
     {
+        // @codeCoverageIgnoreStart
         if (!$this->pattern) {
            return [];
         }
+        // @codeCoverageIgnoreEnd
         $matchesNo = preg_match_all($this->pattern,$string,$matches,PREG_OFFSET_CAPTURE);
         if ($matchesNo>0 && $matches) {
             foreach ($matches as $emojis) {
@@ -78,9 +80,11 @@ class EmojiParser extends UnicodeParser
 
     public function clean($string)
     {
+        //@codeCoverageIgnoreStart
         if (!$this->pattern) {
             return $string;
         }
+        //@codeCoverageIgnoreEnd
         $count = 0;
         $result = preg_replace($this->pattern,'',$string,-1,$count);
 

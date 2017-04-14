@@ -11,7 +11,7 @@ class CoreTest extends TestCase
     {
         $this->raw = 'Hello ☻';
         $this->utf8string = 'Hello [:9787]';
-        $this->htmlncr = 'Hello &9787;';
+        $this->htmlncr = 'Hello &#9787;';
     }
 
     public function tearDown()
@@ -47,5 +47,19 @@ class CoreTest extends TestCase
         $this->assertEquals($this->raw, $ret);
         $ret = $core->decode($this->htmlncr, ['raw' => false]);
         $this->assertEquals($this->htmlncr, $ret);
+    }
+
+    public function testClean()
+    {
+       $core = $this->getUtf8ProtocolCore();
+       $ret = $core->clean($this->raw);
+       $this->assertEquals('Hello ', $ret);
+    }
+
+    public function testParse()
+    {
+       $core = $this->getUtf8ProtocolCore();
+       $ret = $core->parse($this->raw);
+       $this->assertNotEmpty($ret);
     }
 }

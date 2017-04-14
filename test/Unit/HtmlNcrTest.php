@@ -14,7 +14,7 @@ class HtmlNcrTest extends TestCase
 
     public function setUp()
     {
-        $this->encoded = 'Hello &9787;';
+        $this->encoded = 'Hello &#9787;';
         $this->decoded = 'Hello ☻';
     }
 
@@ -27,6 +27,6 @@ class HtmlNcrTest extends TestCase
     public function testGetPattern()
     {
         $ret = $this->case->getPattern();
-        $this->assertEquals('/&\d+;/', $ret);
+        $this->assertEquals('/&#\d+;/', $ret);
     }
 }

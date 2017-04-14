@@ -10,10 +10,14 @@ class ProtocolFactory
 
     public static final function generate($protocolName, array $options = [])
     {
-        $reflector = new \ReflectionClass($protocolName);
-        $interfaces = $reflector->getInterfaceNames();
-        $interfacesCount = array_count_values($interfaces);
-        $isImplementsOf = isset($interfacesCount[ProtocolInterface::class]) ? true : false;
+        try {
+            $reflector = new \ReflectionClass($protocolName);
+            $interfaces = $reflector->getInterfaceNames();
+            $interfacesCount = array_count_values($interfaces);
+            $isImplementsOf = isset($interfacesCount[ProtocolInterface::class]) ? true : false;
+        } catch (\ReflectionException $e) {
+           throw new \Exception('Can not found protocol '.$protocolName);
+        }
 
         if (class_exists($protocolName) && $isImplementsOf) {
 
@@ -26,13 +30,13 @@ class ProtocolFactory
 
                 return self::$protocolInstancesMap[$protocolName];
             } else {
+                // @codeCoverageIgnoreStart
                 unset(self::$protocolInstancesMap[$protocolName]);
                 self::$protocolInstancesMap[$protocolName] = new $protocolName($options);
 
                 return self::$protocolInstancesMap[$protocolName];
+                // @codeCoverageIgnoreEnd
             }
         }
-
-        throw new \Exception('Can not found protocol '.$protocolName);
     }
 }

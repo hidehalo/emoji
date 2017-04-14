@@ -14,6 +14,7 @@ class TestEmojiParser extends TestCase
 
     public function testClean()
     {
+        $this->assertEquals('Hello', $this->case->clean('Hello'));
         $string = 'Hello ☻';
         $ret = $this->case->clean($string);
         $this->assertEquals($ret, 'Hello ');
@@ -25,5 +26,6 @@ class TestEmojiParser extends TestCase
         $ret = $this->case->parse($string);
         $this->assertNotEmpty($ret);
         $this->assertInstanceOf(Emoji::class, $ret[array_rand($ret)]);
+        $this->assertEmpty($this->case->parse('Hello'));
     }
 }
