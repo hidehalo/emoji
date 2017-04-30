@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: tian
  * Date: 2017/3/30
- * Time: 11:23
+ * Time: 11:23.
  */
 
 namespace Hidehalo\Emoji\Features\Protocol;
@@ -12,7 +12,7 @@ use Hidehalo\Emoji\Features\UnicodeParser;
 
 class Utf8String implements ProtocolInterface
 {
-    protected $format = "[:%d]";
+    protected $format = '[:%d]';
     protected $pattern = '/\[\:\d+\]/';
 
     public function encode($contents, array $options = [])
@@ -27,7 +27,7 @@ class Utf8String implements ProtocolInterface
 
     public function decode($contents, array $options = [])
     {
-        $unicode = (int) substr($contents,2,-1);
+        $unicode = (int) substr($contents, 2, -1);
         $decoded = UnicodeParser::getSymbol($unicode);
 
         return $decoded;
@@ -42,5 +42,4 @@ class Utf8String implements ProtocolInterface
     {
         return $this->format;
     }
-
 }

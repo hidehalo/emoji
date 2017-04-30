@@ -1,8 +1,8 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
-use Hidehalo\Emoji\Unicode\Emoji;
 use Hidehalo\Emoji\Features\EmojiParser;
+use Hidehalo\Emoji\Unicode\Emoji;
+use PHPUnit\Framework\TestCase;
 
 class TestEmojiParser extends TestCase
 {

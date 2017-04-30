@@ -4,20 +4,19 @@ namespace Hidehalo\Emoji;
 
 use Hidehalo\Emoji\Features\EmojiParser;
 use Hidehalo\Emoji\Features\ParserInterface;
-use Hidehalo\Emoji\Features\ProtocolFactory;
-use Hidehalo\Emoji\Features\Protocol\Utf8String;
 use Hidehalo\Emoji\Features\Protocol\ProtocolInterface;
-
+use Hidehalo\Emoji\Features\Protocol\Utf8String;
+use Hidehalo\Emoji\Features\ProtocolFactory;
 
 class Core
 {
     /**
-     * @var ProtocolInterface $protocol
+     * @var ProtocolInterface
      */
     protected $protocol;
 
     /**
-     * @var ParserInterface $parser
+     * @var ParserInterface
      */
     protected $parser;
 
@@ -74,4 +73,3 @@ class Core
         return $decodeString;
     }
 }
-

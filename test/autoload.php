@@ -3,7 +3,7 @@
 /**
  * User: hidehalo
  * Mail: tianchen@g-i.asia
- * DateTime: 2016/11/2 11:50
+ * DateTime: 2016/11/2 11:50.
  */
 
 //class Psr4Autoloader

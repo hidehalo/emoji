@@ -1,7 +1,7 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
 use Hidehalo\Emoji\Features\UnicodeParser;
+use PHPUnit\Framework\TestCase;
 
 class UnicodeParserTest extends TestCase
 {
@@ -21,6 +21,7 @@ class UnicodeParserTest extends TestCase
     {
         unset($this->bytesNumber, $this->symbol, $this->unicode, $this->bytes);
     }
+
     public function testGetBytesNumber()
     {
         $ret = UnicodeParser::getBytesNumber($this->symbol);

@@ -1,9 +1,9 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
-use Hidehalo\Emoji\Features\ProtocolFactory;
 use Hidehalo\Emoji\Features\Protocol\HtmlNcr;
 use Hidehalo\Emoji\Features\Protocol\Utf8String;
+use Hidehalo\Emoji\Features\ProtocolFactory;
+use PHPUnit\Framework\TestCase;
 
 class ProtocolFactoryTest extends TestCase
 {

@@ -9,7 +9,6 @@ class HtmlNcrTest extends TestCase
     {
         parent::__construct();
         $this->case = new HtmlNcr();
-
     }
 
     public function setUp()
@@ -20,9 +19,8 @@ class HtmlNcrTest extends TestCase
 
     public function tearDown()
     {
-        unset($this->encoded,$this->decoded);
+        unset($this->encoded, $this->decoded);
     }
-
 
     public function testGetPattern()
     {

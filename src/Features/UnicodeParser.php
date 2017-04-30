@@ -1,12 +1,14 @@
 <?php
-namespace Hidehalo\Emoji\Features;
 
+namespace Hidehalo\Emoji\Features;
 
 abstract class UnicodeParser implements ParserInterface
 {
     /**
-     * get native emoji symbol by unicode
+     * get native emoji symbol by unicode.
+     *
      * @param $unicode
+     *
      * @return string $symbol
      */
     public static function getSymbol($unicode)
@@ -17,21 +19,23 @@ abstract class UnicodeParser implements ParserInterface
     }
 
     /**
-     * character of unicode symbol convert to unicode value
+     * character of unicode symbol convert to unicode value.
+     *
      * @param string $symbol
-     * @param integer $bytes
-     * @return integer $ascii
+     * @param int    $bytes
+     *
+     * @return int $ascii
      */
-    public static function getUnicode($symbol,$bytes = 1)
+    public static function getUnicode($symbol, $bytes = 1)
     {
         $offset = 0;
-        $highChar = substr($symbol, $offset ,1);
+        $highChar = substr($symbol, $offset, 1);
         $ascii = ord($highChar);
         if ($bytes > 1) {
             $code = ($ascii) & (2 ** (7 - $bytes) - 1);
-            for ($i = 1;$i<$bytes;$i++) {
+            for ($i = 1; $i < $bytes; $i++) {
                 $char = substr($symbol, $offset + $i, 1);
-                $code =  ($code << 6) | (ord($char) & 0x3f);
+                $code = ($code << 6) | (ord($char) & 0x3f);
             }
             $ascii = $code;
         }
@@ -40,16 +44,18 @@ abstract class UnicodeParser implements ParserInterface
     }
 
     /**
-     * get Unicode symbol bytes number
+     * get Unicode symbol bytes number.
+     *
      * @param string $symbol
-     * @return integer $bytesNumber
+     *
+     * @return int $bytesNumber
      */
     public static function getBytesNumber($symbol)
     {
         $ascii = ord($symbol);
         $bytesNumber = 1;
         if ($ascii > 0x7f) {
-            switch ($ascii&0xf0) {
+            switch ($ascii & 0xf0) {
                 case 0xfd:
                     $bytesNumber = 6;
                     break;
@@ -79,8 +85,8 @@ abstract class UnicodeParser implements ParserInterface
     {
         $bytesNumber = self::getBytesNumber($symbol);
         $bytes = [];
-        for ($i=0; $i<$bytesNumber; $i++) {
-            $bytes[] = ord(substr($symbol,$i,1));
+        for ($i = 0; $i < $bytesNumber; $i++) {
+            $bytes[] = ord(substr($symbol, $i, 1));
         }
 
         return $bytes;

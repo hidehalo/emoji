@@ -1,4 +1,5 @@
 <?php
+
 namespace Hidehalo\Emoji\Features;
 
 /*  @link{wiki}:
