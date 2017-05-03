@@ -1,9 +1,9 @@
 <?php
 
 use Hidehalo\Emoji\Core;
-use PHPUnit\Framework\TestCase;
 use Hidehalo\Emoji\Features\Protocol\HtmlNcr;
 use Hidehalo\Emoji\Features\Protocol\Utf8String;
+use PHPUnit\Framework\TestCase;
 
 class CoreTest extends TestCase
 {
@@ -51,15 +51,15 @@ class CoreTest extends TestCase
 
     public function testClean()
     {
-       $core = $this->getUtf8ProtocolCore();
-       $ret = $core->clean($this->raw);
-       $this->assertEquals('Hello ', $ret);
+        $core = $this->getUtf8ProtocolCore();
+        $ret = $core->clean($this->raw);
+        $this->assertEquals('Hello ', $ret);
     }
 
     public function testParse()
     {
-       $core = $this->getUtf8ProtocolCore();
-       $ret = $core->parse($this->raw);
-       $this->assertNotEmpty($ret);
+        $core = $this->getUtf8ProtocolCore();
+        $ret = $core->parse($this->raw);
+        $this->assertNotEmpty($ret);
     }
 }

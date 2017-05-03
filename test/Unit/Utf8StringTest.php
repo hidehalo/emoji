@@ -5,12 +5,10 @@ use PHPUnit\Framework\TestCase;
 
 class Utf8StringTest extends TestCase
 {
-
     public function __construct()
     {
         parent::__construct();
         $this->case = new Utf8String();
-
     }
 
     public function setUp()
@@ -21,7 +19,7 @@ class Utf8StringTest extends TestCase
 
     public function tearDown()
     {
-        unset($this->encoded,$this->decoded);
+        unset($this->encoded, $this->decoded);
     }
 
     public function testGetPattern()
