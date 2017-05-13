@@ -9,7 +9,7 @@ class EmojiParser extends UnicodeParser
     /* @link http://unicode.org/emoji/charts/full-emoji-list.html */
     private $maps = [
         [0x00A9, 0x00AE],
-        [0x200D, 0x2B50],
+        [0x200D, 0x2B55],
         [0x3030, 0x303D],
         [0x3297, 0x3299],
         [0xFE0F, 0xFE0F],
