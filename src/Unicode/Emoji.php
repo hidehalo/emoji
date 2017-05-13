@@ -8,4 +8,24 @@ class Emoji extends UTF8
     {
         parent::__construct($symbol, $bytes, $unicode, $bytesNumber);
     }
+
+    public function getUnicode()
+    {
+        return $this->unicode;
+    }
+
+    public function getBytesNum()
+    {
+        return $this->bytesNumber;
+    }
+
+    public function getBytes()
+    {
+        return $this->bytes;
+    }
+
+    public function getSymbol()
+    {
+        return $this->symbol;
+    }
 }
