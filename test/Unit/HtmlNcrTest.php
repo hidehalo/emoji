@@ -13,8 +13,8 @@ class HtmlNcrTest extends TestCase
 
     public function setUp()
     {
-        $this->encoded = 'Hello &#9787;';
-        $this->decoded = 'Hello ☻';
+        $this->encoded = 'Hello &#128514;';
+        $this->decoded = 'Hello 😂';
     }
 
     public function tearDown()

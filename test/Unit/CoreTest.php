@@ -9,9 +9,9 @@ class CoreTest extends TestCase
 {
     public function setUp()
     {
-        $this->raw = 'Hello ☻';
-        $this->utf8string = 'Hello [:9787]';
-        $this->htmlncr = 'Hello &#9787;';
+        $this->raw = 'Hello 😂';
+        $this->utf8string = 'Hello [:128514]';
+        $this->htmlncr = 'Hello &#128514;';
     }
 
     public function tearDown()

@@ -14,7 +14,7 @@ class Utf8StringTest extends TestCase
     public function setUp()
     {
         $this->encoded = 'Hello [:9787]';
-        $this->decoded = 'Hello ☻';
+        $this->decoded = 'Hello 😂';
     }
 
     public function tearDown()

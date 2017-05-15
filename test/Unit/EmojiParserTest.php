@@ -15,14 +15,14 @@ class TestEmojiParser extends TestCase
     public function testClean()
     {
         $this->assertEquals('Hello', $this->case->clean('Hello'));
-        $string = 'Hello ☻';
+        $string = 'Hello 😂';
         $ret = $this->case->clean($string);
         $this->assertEquals($ret, 'Hello ');
     }
 
     public function testParse()
     {
-        $string = 'Hello ☻';
+        $string = 'Hello 😂';
         $ret = $this->case->parse($string);
         $this->assertNotEmpty($ret);
         $this->assertInstanceOf(Emoji::class, $ret[array_rand($ret)]);

@@ -2,19 +2,13 @@
 
 namespace Hidehalo\Emoji\Features;
 
+use League\Csv\Reader;
 use Hidehalo\Emoji\Unicode\Emoji;
 
 class EmojiParser extends UnicodeParser
 {
     /* @link http://unicode.org/emoji/charts/full-emoji-list.html */
     private $maps = [
-        [0x00A9, 0x00AE],
-        [0x200D, 0x2B55],
-        [0x3030, 0x303D],
-        [0x3297, 0x3299],
-        [0xFE0F, 0xFE0F],
-        [0xFE30, 0xFE4F],
-        [0x1F004, 0x1F9E6],
         [0xE0062, 0xE007F],
     ];
     /**
@@ -24,6 +18,7 @@ class EmojiParser extends UnicodeParser
 
     public function __construct(array $config = [])
     {
+        $this->maps = array_merge($this->maps, $this->buildMapFromCsv());
         $this->pattern = $this->buildRegex($this->maps);
     }
 
@@ -89,13 +84,42 @@ class EmojiParser extends UnicodeParser
         $pattern = '';
         if ($maps) {
             foreach ($maps as $range) {
-                $min = $range[0];
-                $max = $range[1];
+                if (is_array($range)) {
+                    $min = $range[0];
+                    $max = $range[1];
+                } else {
+                    $min = $max = $range;
+                }
                 $pattern .= $this->getSymbol($min).'-'.$this->getSymbol($max);
             }
             $pattern = '/['.$pattern.']/u';
         }
 
         return $pattern;
+    }
+
+    private function buildMapFromCsv()
+    {
+        $reader = Reader::createFromPath(__DIR__.'/../../data/emoji.csv');
+        $result = $reader->fetchAssoc(['codepoints']);
+        $maps = [];
+        foreach ($result as $row) {
+            $codepoint = trim($row['codepoints']);
+            if ($codepoint == 'codepoints')
+                continue;
+            if ($this->isRange($codepoint)) {
+                list($min, $max) = explode('..',$codepoint);
+                $maps[] = [hexdec("0x$min"), hexdec("0x$max")];
+            } else {
+                $maps[] = hexdec("0x$codepoint");
+            }
+        }
+
+        return $maps;
+    }
+
+    private function isRange($codepoints)
+    {
+        return strpos($codepoints, '..');
     }
 }

@@ -7,13 +7,14 @@ class UnicodeParserTest extends TestCase
 {
     public function setUp()
     {
-        $this->bytesNumber = 3;
-        $this->symbol = '☻';
-        $this->unicode = 9787;
+        $this->bytesNumber = 4;
+        $this->symbol = '😂';
+        $this->unicode = 128514;
         $this->bytes = [
-            226,
+            240,
+            159,
             152,
-            187,
+            130,
         ];
     }
 

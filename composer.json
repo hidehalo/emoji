@@ -13,7 +13,9 @@
         }
     ],
     "minimum-stability": "stable",
-    "require": {},
+    "require": {
+        "league/csv": "^8.2"
+    },
     "autoload": {
         "psr-4": {
             "Hidehalo\\Emoji\\": "src/",
