@@ -9,11 +9,11 @@ class EmojiParser extends UnicodeParser
 {
     /* @link http://unicode.org/emoji/charts/full-emoji-list.html */
     private $maps = [
+        0xFE0F,
+        0x20E3,
         [0xE0062, 0xE007F],
     ];
-    /**
-     * @var string;
-     */
+ 
     protected $pattern;
 
     public function __construct(array $config = [])
