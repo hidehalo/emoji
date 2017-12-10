@@ -56,20 +56,13 @@ abstract class UnicodeParser implements ParserInterface
         $bytesNumber = 1;
         if ($ascii > 0x7f) {
             switch ($ascii & 0xf0) {
-                case 0xfd:
-                    $bytesNumber = 6;
-                    break;
-                case 0xf8:
-                    $bytesNumber = 5;
-                    break;
                 case 0xf0:
                     $bytesNumber = 4;
                     break;
                 case 0xe0:
                     $bytesNumber = 3;
                     break;
-                case 0xd1:
-                case 0xd0:
+                case 0xc0:
                     $bytesNumber = 2;
                     break;
             }
