@@ -22,21 +22,6 @@ class Utf8StringTest extends TestCase
         unset($this->encoded, $this->decoded);
     }
 
-    /**
-     * Issue #8
-     * 
-     * @group testing
-     * @see https://github.com/hidehalo/emoji/issues/8
-     */
-    public function testSpec()
-    {
-        $raw = "«";
-        $encoded = $this->case->encode($raw);
-        $decoded = $this->case->decode($encoded);
-        $this->assertSame($raw, $decoded);
-        // $this->assertSame($raw, $encoded);
-    }
-
     public function testGetPattern()
     {
         $ret = $this->case->getPattern();
