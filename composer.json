@@ -13,14 +13,12 @@
         }
     ],
     "minimum-stability": "stable",
-    "require": {
-        "league/csv": "^8.2"
-    },
     "autoload": {
         "psr-4": {
-            "Hidehalo\\Emoji\\": "src/",
-            "Hidehalo\\Emoji\\Features\\": "src/Features/",
-            "Hidehalo\\Emoji\\Unicode\\": "src/Unicode/"
-        }
+            "Hidehalo\\Emoji\\": "src/"
+        },
+        "files": [
+            "func.php"
+        ]
     }
 }
