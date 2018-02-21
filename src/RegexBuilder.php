@@ -1,7 +1,9 @@
 <?php
 
 namespace Hidehalo\Emoji;
-
+/**
+ * @codeCoverageIgnore
+ */
 class RegexBuilder
 {
     public function __construct($dataPath)
@@ -20,8 +22,6 @@ class RegexBuilder
         $seqPattern = $this->complieEmojiSequences($data['emoji-sequences']);
         $emojiPattern = $this->complieEmoji($data['emoji-data']);
         $pattern = "/[$emojiPattern|$seqPattern|$zwjPattern|$varPattern]/muxX";
-        // $pattern = "/[$seqPattern]/muxX";
-        
 
         return $pattern;
     }
