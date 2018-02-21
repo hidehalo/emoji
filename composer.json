@@ -20,5 +20,10 @@
         "files": [
             "func.php"
         ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Hidehalo\\Emoji\\Tests\\": "tests/"
+        }
     }
 }
