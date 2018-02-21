@@ -58,13 +58,3 @@ class Parser
         return $result?: $string;
     }
 }
-
-require __DIR__.'/../vendor/autoload.php';
-
-$p = new Parser;
-$str = '😬';
-$ret = $p->parse($str);
-$ret = $p->encode($str);
-print_r($ret);
-print_r($p->decode($ret));
-

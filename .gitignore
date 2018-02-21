@@ -1,4 +1,4 @@
 /vendor
 .DS_Store
 .idea
-report/
+composer.lock
