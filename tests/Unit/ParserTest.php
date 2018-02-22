@@ -37,7 +37,7 @@ class ParserTest extends TestCase
         $samples = [];
         $this->read($path, $samples);
         $size = count($samples);
-        if ($size > 0) {              
+        if ($size > 0) {
             $samples = array_map(function ($elm) {
                 $codepoints = explode(' ', $elm);
                 $str = '';

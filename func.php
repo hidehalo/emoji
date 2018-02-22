@@ -43,7 +43,7 @@ function codepoint($unicode)
 
 function unicode($codepoint)
 {
-    $symbol = iconv('UCS-4LE', 'UTF-8', pack('V', $codepoint));
+    $symbol = iconv('UCS-4LE', 'UTF-8//TRANSLIT', pack('V', $codepoint));
 
     return $symbol;
 }
