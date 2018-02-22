@@ -43,7 +43,7 @@ function codepoint($unicode)
 
 function unicode($codepoint)
 {
-    $symbol = iconv('UCS-4-INTERNAL', 'UTF-8//TRANSLIT', pack('L', $codepoint));
+    $symbol = @iconv('UCS-4-INTERNAL', 'UTF-8//TRANSLIT', pack('L', $codepoint));
 
     return $symbol;
 }
