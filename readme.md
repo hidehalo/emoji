@@ -17,17 +17,18 @@ if you do not want to set MySQL Server default character encode and connections 
 ```php
 #use composer autoloader
 require_once vendor/autoload.php;
-use Hidehalo\Emoji\Core;
+use Hidehalo\Emoji\Parser;
 
 #if you want to parse emojis for a text
-$core = new Core();
-$core->parse($contents);
+$parser = new Parser();
+$parser->parse($contents);
 
-#and it will return an array which contained object instance of Hidehalo\Emoji\Unicode\Emoji
-#or it will return a empty array like this : []
-#if you want to replace those emoji symbols to ohter marked texts and has ability to turn those back,it has a built-in Hidehalo\Emoji\Features\Protocol could do this
-$encoded = $core->encode($raw);
-$decoded = $core->decode($encoded);
+#if you want to replace those emoji symbols to ohter marked texts and has ability to turn those back,it has a built-in Protocol and Converter could do this
+use Hidehalo\Emoji\Converter;
+
+$converter = new Converter($parser);
+$encoded = $converter->encode($raw);
+$decoded = $converter->decode($encoded);
 # and $decoded will equals $raw,it is real very simple
 ```
 
