@@ -61,7 +61,7 @@ function utf8_to_cop($unicode)
  */
 function cop_to_utf8($codepoint)
 {
-    $symbol = iconv('UCS-4BE', 'UTF-8', pack('N', $codepoint));
+    $symbol = iconv('UCS-4BE', 'UTF-8//IGNORE', pack('N', $codepoint));
 
     return $symbol;
 }
