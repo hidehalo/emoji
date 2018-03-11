@@ -9,19 +9,25 @@ class Utf8String implements ProtocolInterface
     protected $format = '[:%d]';
     protected $pattern = '/\[\:\d+\]/';
 
+    /**
+     * @inheritDoc
+     */
     public function encode($contents)
     {
-        $codepoint = codepoint($contents);
+        $codepoint = utf8_to_cop($contents);
         $format = $this->getFormat();
         $encoded = sprintf($format, $codepoint);
 
         return $encoded;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function decode($contents)
     {
         $codepoint = (int) substr($contents, 2, -1);
-        $decoded = unicode($codepoint);
+        $decoded = cop_to_utf8($codepoint);
 
         return $decoded;
     }
