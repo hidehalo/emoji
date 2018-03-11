@@ -2,29 +2,32 @@
 
 namespace Hidehalo\Emoji\Tests\Protocol;
 
-use Hidehalo\Emoji\Protocol\HtmlNcr;
 use PHPUnit\Framework\TestCase;
+use Hidehalo\Emoji\Protocol\HtmlNcr;
+use Hidehalo\Emoji\Tests\TestSampleTrait;
 
 class HtmlNcrTest extends TestCase
 {
+    use TestSampleTrait;
+    
     public function __construct()
     {
         parent::__construct();
         $this->case = new HtmlNcr();
-        $this->encoded = '&#128514;';
-        $this->decoded = '😂';
     }
 
-    public function testEncode()
+    public function testEncodeAndDecode()
     {
-        $ret = $this->case->encode($this->decoded);
-        $this->assertSame($this->encoded, $ret);        
+        $samples = $this->testSampleProvider();
+        foreach ($samples as $sample) {
+            $full = '';
+            foreach (utf8_cursor($sample) as $char) {
+                $encoded = $this->case->encode($char);
+                $decoded = $this->case->decode($encoded);
+                $full .= $decoded;
+                $this->assertSame($char, $decoded);
+            }
+            $this->assertSame($sample, $full);
+        }
     }
-
-    public function testDecode()
-    {
-        $ret = $this->case->decode($this->encoded);
-        $this->assertSame($this->decoded, $ret);
-    }
-
 }
