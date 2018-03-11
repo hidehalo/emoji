@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/hidehalo/emoji.svg)](https://travis-ci.org/hidehalo/emoji)
 
-If you want help for parse and store emoji symbol characters,you could think about use this library :)
+If you want help with parse and store emoji symbol characters,you could think about use this library :)
 
 ## Features
 
@@ -51,9 +51,10 @@ $clean = $converter->encode($raw, new Filter);
 
 ### Custom protocol
 
+Maybe you want to impl your custom convert protocol,you can make it through implements [ProtocolInterface](src/Protocol/ProtocolInterface.php)
+
 ```php
-# maybe you want to impl your custom convert protocol
-# you can make it through implements [ProtocolInterface](src/Protocol/ProtocolInterface)
+
 
 use Hidehalo\Emoji\Protocol\ProtocolInterface as Protocol;
 use Hidehalo\Emoji\Protocol\PatternAwareTrait;
