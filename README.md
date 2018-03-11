@@ -2,40 +2,88 @@
 
 [![Build Status](https://travis-ci.org/hidehalo/emoji.svg)](https://travis-ci.org/hidehalo/emoji)
 
-## Why
-
-if you do not want to set MySQL Server default character encode and connections of MySQL and etc,or your MySQL do not support utf8mb4 character,you could think about use this library :)
+If you want help for parse and store emoji symbol characters,you could think about use this library :)
 
 ## Features
 
-1. Detected emoji symbols only,and parse to utf-8 bytes or unicode decimal value
+1. Detected emoji symbols only
 2. Replace emoji symbols to other texts and turn it back
-3. WYSWYG(What's Your See,What's Your Get)
-4. Zero dependence
-5. Lightweight
+3. Zero dependence
+4. Lightweight and fast
 
 ## Install
 
-- composer require hidehalo/emoji
+```bash
+$composer require hidehalo/emoji
+```
 
-## How to Use
+## Usage
+
+### Parser
 
 ```php
-#use composer autoloader
-require_once vendor/autoload.php;
+require vendor/autoload.php;
 use Hidehalo\Emoji\Parser;
 
-#if you want to parse emojis for a text
 $parser = new Parser();
 $parser->parse($contents);
+```
 
-#if you want to replace those emoji symbols to ohter marked texts and has ability to turn those back,it has a built-in Protocol and Converter could do this
+### Converter
+
+```php
+# if you want to replace those emoji symbols to ohter marked texts 
+# and has ability to turn those back,
+# it has a built-in Protocol and Converter could do this
+# and $decoded will equals $raw,it is real very simple
+
 use Hidehalo\Emoji\Converter;
 
 $converter = new Converter($parser);
 $encoded = $converter->encode($raw);
 $decoded = $converter->decode($encoded);
-# and $decoded will equals $raw,it is real very simple
+
+# filter emojis
+use Hidehalo\Emoji\Protocol\Filter;
+
+$clean = $converter->encode($raw, new Filter);
+```
+
+### Custom protocol
+
+```php
+# maybe you want to impl your custom convert protocol
+# you can make it through implements [ProtocolInterface](src/Protocol/ProtocolInterface)
+
+use Hidehalo\Emoji\Protocol\ProtocolInterface as Protocol;
+use Hidehalo\Emoji\Protocol\PatternAwareTrait;
+
+class CustomProto implments Protocol
+{
+    use PatternAwareTrait;
+
+    protected $format = "FORMAT";
+    protected $pattern = "/FORMAT/";
+
+    public function encode($contents)
+    {
+        //your impls
+    }
+
+    public function decode($contents)
+    {
+        //your impls
+    }
+}
+$customProto = new CustomProto;
+$customEncoded = $converter->encode($raw, $customProto);
+$customDecoded = $converter->decode($customDecoded, $customProto);
+```
+
+## Testing
+
+```bash
+$./vendor/bin/phpunit
 ```
 
 ## License
