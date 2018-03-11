@@ -19,7 +19,7 @@ class FilterTest extends TestCase
 
     public function testEncodeAndDecode()
     {
-        $samples = $this->testSampleProvider();
+        $samples = $this->sampleProvider();
         foreach ($samples as $sample) {
             $encoded = $this->case->encode($sample);
             $decoded = $this->case->decode($encoded);

@@ -20,7 +20,7 @@ class ParserTest extends TestCase
    
     public function testParse()
     {
-        $samples = $this->testSampleProvider();
+        $samples = $this->sampleProvider();
         foreach ($samples as $sample) {
             $string = "Hello $sample and $sample";
             $ret = $this->case->parse($string);

@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Count UTF-8 btyes number
+ *
+ * @param string $unicode
+ * @return integer
+ */
 function bytes_cnt($unicode)
 {
     $head = intval($unicode);
@@ -34,15 +40,13 @@ function utf8_to_cop($unicode)
     $head = substr($unicode, $offset, 1);
     $ascii = ord($head);
     $num = bytes_cnt($ascii);
-    // var_dump(dechex($ascii));
     if ($num > 1) {
         $codepoint = $ascii & ((1<<(7 - $num)) - 1);
         for ($i = 1; $i < $num; $i++) {
             $char = ord(substr($unicode, $offset + $i, 1));
             $codepoint = ($codepoint << 6) | ($char & 0x3f);
-            // var_dump(dechex($char));
         }
-        // var_dump($codepoint);
+
         return $codepoint;
     }
 
@@ -57,7 +61,7 @@ function utf8_to_cop($unicode)
  */
 function cop_to_utf8($codepoint)
 {
-    $symbol = iconv('UCS-4LE', 'UTF-8', pack('V', $codepoint));
+    $symbol = iconv('UCS-4-INTERNAL', 'UTF-8', pack('V', $codepoint));
 
     return $symbol;
 }

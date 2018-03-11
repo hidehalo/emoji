@@ -4,7 +4,7 @@ namespace Hidehalo\Emoji\Tests;
 
 trait TestSampleTrait
 {
-    public function testSampleProvider()
+    public function sampleProvider()
     {
         $path = __DIR__.'/../data/emoji-test.txt';
         $samples = [];

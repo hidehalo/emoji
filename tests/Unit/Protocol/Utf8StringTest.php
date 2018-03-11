@@ -18,7 +18,7 @@ class Utf8StringTest extends TestCase
     
     public function testEncodeAndDecode()
     {
-        $samples = $this->testSampleProvider();
+        $samples = $this->sampleProvider();
         foreach ($samples as $sample) {
             $full = '';
             foreach (utf8_cursor($sample) as $char) {
