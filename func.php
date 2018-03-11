@@ -22,6 +22,12 @@ function bytes_cnt($unicode)
     return $number;
 }
 
+/**
+ * Utf8 to unicode codepoint
+ *
+ * @param string $unicode
+ * @return integer
+ */
 function utf8_to_cop($unicode)
 {
     $offset = 0;
@@ -43,6 +49,12 @@ function utf8_to_cop($unicode)
     return $ascii;
 }
 
+/**
+ * Unicode codepoint to utf8
+ *
+ * @param integer $codepoint
+ * @return string
+ */
 function cop_to_utf8($codepoint)
 {
     $symbol = iconv('UCS-4LE', 'UTF-8', pack('V', $codepoint));
@@ -50,6 +62,12 @@ function cop_to_utf8($codepoint)
     return $symbol;
 }
 
+/**
+ * Cursor of utf8 encode string
+ *
+ * @param string $string
+ * @return Generator
+ */
 function utf8_cursor($string)
 {
     $size = strlen($string);
