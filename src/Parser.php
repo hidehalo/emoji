@@ -13,13 +13,24 @@ class Parser
         $this->pattern = (new RegexBuilder(__DIR__.'/../data/emoji.cache'))->complie();
     }
 
+    /**
+     * Parse emoji symbols
+     *
+     * @param string $string
+     * @return string|boolean
+     */
     public function parse($string)
     {
         $ret = preg_match_all($this->pattern, $string, $matches);
-       
-        return $ret? $matches: false;
+
+        return $ret? implode('',$matches[0]): false;
     }
 
+    /**
+     * Get regex pattern
+     *
+     * @return string
+     */
     public function getPattern()
     {
         return $this->pattern;
