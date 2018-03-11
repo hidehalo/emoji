@@ -22,28 +22,41 @@ function bytes_cnt($unicode)
     return $number;
 }
 
-function codepoint($unicode)
+function utf8_to_cop($unicode)
 {
     $offset = 0;
     $head = substr($unicode, $offset, 1);
     $ascii = ord($head);
     $num = bytes_cnt($ascii);
+    // var_dump(dechex($ascii));
     if ($num > 1) {
-        $codepoint = $ascii & (2^(7 - $num) - 1);
+        $codepoint = $ascii & ((1<<(7 - $num)) - 1);
         for ($i = 1; $i < $num; $i++) {
-            $char = substr($unicode, $offset + $i, 1);
-            $codepoint = ($codepoint << 6) | (ord($char) & 0x3f);
+            $char = ord(substr($unicode, $offset + $i, 1));
+            $codepoint = ($codepoint << 6) | ($char & 0x3f);
+            // var_dump(dechex($char));
         }
-        
+        // var_dump($codepoint);
         return $codepoint;
     }
 
     return $ascii;
 }
 
-function unicode($codepoint)
+function cop_to_utf8($codepoint)
 {
-    $symbol = @iconv('UCS-4LE', 'UTF-8//TRANSLIT', pack('V', $codepoint));
+    $symbol = iconv('UCS-4LE', 'UTF-8', pack('V', $codepoint));
 
     return $symbol;
+}
+
+function utf8_cursor($string)
+{
+    $size = strlen($string);
+    for ($i=0, $step=bytes_cnt(ord($string[$i]));
+        $i<$size;
+        $i+=$step, $step=bytes_cnt(ord(@$string[$i]))
+    ) {
+        yield substr($string, $i, $step);
+    }
 }
