@@ -23,7 +23,7 @@ class Parser
     {
         $ret = preg_match_all($this->pattern, $string, $matches);
 
-        return $ret? implode('',$matches[0]): false;
+        return $ret? $matches[0]: false;
     }
 
     /**

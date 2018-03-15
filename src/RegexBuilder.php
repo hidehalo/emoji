@@ -29,7 +29,7 @@ class RegexBuilder
         $zwjPattern = $this->complieEmojiSequences($data['emoji-zwj-sequences']);
         $seqPattern = $this->complieEmojiSequences($data['emoji-sequences']);
         $emojiPattern = $this->complieEmoji($data['emoji-data']);
-        $pattern = "/[$seqPattern|$zwjPattern|$varPattern|$emojiPattern]/mu";
+        $pattern = "/$seqPattern|$zwjPattern|$varPattern|$emojiPattern/mu";
 
         return $pattern;
     }
@@ -51,7 +51,7 @@ class RegexBuilder
                 if (hexdec($codepointA) < 0x80) {
                     continue;
                 }
-                $slice = cop_to_utf8(hexdec($codepointA)).'-'.cop_to_utf8(hexdec($codepointB));;
+                $slice = '['.cop_to_utf8(hexdec($codepointA)).'-'.cop_to_utf8(hexdec($codepointB)).']';
             } elseif (hexdec($codepoints) < 0x80) {
                 continue;
             }
@@ -78,7 +78,7 @@ class RegexBuilder
                 $tmp = cop_to_utf8(hexdec($codepoint));
                 $slice .= preg_quote($tmp, '\+*?[^]$(){}=!<>|:-#');
             }
-            $pattern .= $flag."($slice)";
+            $pattern .= ($flag.$slice);
         }
 
         return trim($pattern, '|');
