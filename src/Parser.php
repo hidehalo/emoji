@@ -10,7 +10,7 @@ class Parser
 
     public function __construct()
     {
-        $this->pattern = (new RegexBuilder(__DIR__.'/../data/emoji.cache'))->complie();
+        $this->pattern = file_get_contents(__DIR__.'/../data/pattern.cache');
     }
 
     /**
