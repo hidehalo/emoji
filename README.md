@@ -1,6 +1,7 @@
 # Emoji
 
 [![Build Status](https://travis-ci.org/hidehalo/emoji.svg)](https://travis-ci.org/hidehalo/emoji)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fhidehalo%2Femoji.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fhidehalo%2Femoji?ref=badge_shield)
 
 If you want help with parse and store emoji symbol characters,you could think about use this library :)
 
@@ -90,3 +91,5 @@ $./vendor/bin/phpunit
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fhidehalo%2Femoji.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fhidehalo%2Femoji?ref=badge_large)
